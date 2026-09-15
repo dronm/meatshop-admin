@@ -1,3 +1,5 @@
+import { errorText } from "@katren/vue-collection-lib/utils/errorText";
+
 import { orderDocumentApi } from "@/api/orderDocument";
 import { normalizeRef1C } from "@/utils/ref1c";
 
@@ -10,6 +12,14 @@ interface PopupGeometry {
 	height: number;
 	left: number;
 	top: number;
+}
+
+type PrintTarget = "order" | "shipment";
+
+interface PrintText {
+	title: string;
+	loading: string;
+	error: string;
 }
 
 const getPopupGeometry = (): PopupGeometry => {
@@ -128,28 +138,53 @@ const writePdf = (
 	}
 };
 
-const errorText = (error: unknown): string => {
-	if (error instanceof Error && error.message.trim() !== "") {
-		return error.message;
+const printText = (
+	target: PrintTarget,
+	orderIDs: readonly number[],
+): PrintText => {
+	const singleOrderID = orderIDs.length === 1 ? orderIDs[0] : null;
+
+	if (target === "shipment") {
+		return {
+			title:
+				singleOrderID === null
+					? `Печатные формы отгрузок (${orderIDs.length})`
+					: `Печатная форма отгрузки по заказу №${singleOrderID}`,
+			loading: "Получение печатной формы отгрузки из 1С...",
+			error: "Не удалось получить печатную форму отгрузки.",
+		};
 	}
 
-	return String(error);
+	return {
+		title:
+			singleOrderID === null
+				? `Печатные формы заказов (${orderIDs.length})`
+				: `Печатная форма заказа №${singleOrderID}`,
+		loading: "Получение печатной формы заказа из 1С...",
+		error: "Не удалось получить печатную форму заказа.",
+	};
 };
 
 export const hasOrder1CReference = (value: unknown): boolean => {
 	return normalizeRef1C(value) !== null;
 };
 
-export const openOrderPrintPopup = async (orderId: number): Promise<void> => {
-	if (!Number.isInteger(orderId) || orderId <= 0) {
+const openPrintPopup = async (
+	target: PrintTarget,
+	orderIDs: readonly number[],
+): Promise<void> => {
+	if (
+		orderIDs.length === 0 ||
+		orderIDs.some((id) => !Number.isInteger(id) || id <= 0)
+	) {
 		return;
 	}
 
-	const title = `Печатная форма заказа №${orderId}`;
+	const text = printText(target, orderIDs);
 	const geometry = getPopupGeometry();
 	const popup = window.open(
 		"",
-		`order-print-${orderId}-${Date.now()}`,
+		`${target}-print-${Date.now()}`,
 		popupFeatures(geometry),
 	);
 
@@ -158,10 +193,8 @@ export const openOrderPrintPopup = async (orderId: number): Promise<void> => {
 		return;
 	}
 
-	//applyPopupGeometry(popup, geometry);
 	popup.focus();
-	writeMessage(popup, title, "Получение печатной формы из 1С...");
-	//applyPopupGeometry(popup, geometry);
+	writeMessage(popup, text.title, text.loading);
 
 	window.setTimeout(() => {
 		if (!popup.closed) {
@@ -170,13 +203,18 @@ export const openOrderPrintPopup = async (orderId: number): Promise<void> => {
 	}, 100);
 
 	try {
-		const pdf = await orderDocumentApi.print1c({ id: orderId });
+		const pdf =
+			target === "order"
+				? await orderDocumentApi.printOrders1c(orderIDs)
+				: await orderDocumentApi.printShipments1c(
+						orderIDs,
+					);
 		if (popup.closed) {
 			return;
 		}
 
 		const blobUrl = URL.createObjectURL(pdf);
-		writePdf(popup, title, blobUrl);
+		writePdf(popup, text.title, blobUrl);
 		applyPopupGeometry(popup, geometry);
 		popup.focus();
 
@@ -192,12 +230,24 @@ export const openOrderPrintPopup = async (orderId: number): Promise<void> => {
 		if (!popup.closed) {
 			writeMessage(
 				popup,
-				title,
-				`Не удалось получить печатную форму.\n${errorText(error)}`,
+				text.title,
+				`${text.error}\n${errorText(error)}`,
 				true,
 			);
 			applyPopupGeometry(popup, geometry);
 			popup.focus();
 		}
 	}
+};
+
+export const openOrderPrintPopup = async (
+	orderIDs: readonly number[],
+): Promise<void> => {
+	await openPrintPopup("order", orderIDs);
+};
+
+export const openShipmentPrintPopup = async (
+	orderIDs: readonly number[],
+): Promise<void> => {
+	await openPrintPopup("shipment", orderIDs);
 };

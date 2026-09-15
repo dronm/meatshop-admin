@@ -1,4 +1,5 @@
 import type { Ref1C } from "@/types/ref1c";
+import type { Integration1CJobStatus } from "@/types/integration1cJob";
 
 export type { Ref1C } from "@/types/ref1c";
 
@@ -29,6 +30,7 @@ export interface OrderDocument {
 	for_date: Date;
 	number_1c: string | null;
 	ref_1c: Ref1C | null;
+	shipment_ref_1c: Ref1C | null;
 	customer_id: number;
 	customer_sale_place_id: number;
 	customer_user_id: number | null;
@@ -56,6 +58,7 @@ export interface OrderFormModel {
 	for_date: Date | null;
 	number_1c: string | null;
 	ref_1c: Ref1C | null;
+	shipment_ref_1c: Ref1C | null;
 	customer_id: number | null;
 	customer: IDReference | null;
 	customer_sale_place_id: number | null;
@@ -67,4 +70,9 @@ export interface OrderFormModel {
 	comment_customer: string | null;
 	comment_admin: string | null;
 	items: OrderDocumentItem[];
+}
+
+export interface Order1CJobResponse {
+	job_id: number;
+	status: Integration1CJobStatus;
 }

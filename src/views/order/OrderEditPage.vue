@@ -28,9 +28,11 @@ import type {
 	OrderFormModel,
 	OrderKey,
 } from "@/types/orderDocument";
+import { createOrderShipments } from "@/utils/order1cActions";
 import {
 	hasOrder1CReference,
 	openOrderPrintPopup,
+	openShipmentPrintPopup,
 } from "@/utils/orderPrintPopup";
 
 const { t } = useI18n();
@@ -82,10 +84,21 @@ const integrationJobsKey = computed(() => {
 	return `${orderId.value ?? 0}:${edit.model.value.version}`;
 });
 
-const printing = ref(false);
-const canPrint = computed(() => {
-	return orderId.value !== null
-		&& hasOrder1CReference(edit.model.value.ref_1c);
+const printingOrder = ref(false);
+const creatingShipment = ref(false);
+const printingShipment = ref(false);
+const canRun1CActions = computed(() => {
+	return (
+		orderId.value !== null &&
+		hasOrder1CReference(edit.model.value.ref_1c)
+	);
+});
+const running1CAction = computed(() => {
+	return (
+		printingOrder.value ||
+		creatingShipment.value ||
+		printingShipment.value
+	);
 });
 
 const ref1C = computed(() => {
@@ -101,15 +114,43 @@ const ref1C = computed(() => {
 
 const printOrder = async (): Promise<void> => {
 	const id = orderId.value;
-	if (id === null || !canPrint.value) {
+	if (id === null || !canRun1CActions.value) {
 		return;
 	}
 
-	printing.value = true;
+	printingOrder.value = true;
 	try {
-		await openOrderPrintPopup(id);
+		await openOrderPrintPopup([id]);
 	} finally {
-		printing.value = false;
+		printingOrder.value = false;
+	}
+};
+
+const createShipment = async (): Promise<void> => {
+	const id = orderId.value;
+	if (id === null || !canRun1CActions.value) {
+		return;
+	}
+
+	creatingShipment.value = true;
+	try {
+		await createOrderShipments([id]);
+	} finally {
+		creatingShipment.value = false;
+	}
+};
+
+const printShipment = async (): Promise<void> => {
+	const id = orderId.value;
+	if (id === null || !canRun1CActions.value) {
+		return;
+	}
+
+	printingShipment.value = true;
+	try {
+		await openShipmentPrintPopup([id]);
+	} finally {
+		printingShipment.value = false;
 	}
 };
 
@@ -127,16 +168,34 @@ const submit = async (model: OrderFormModel): Promise<void> => {
 	>
 		<div
 			v-if="orderId !== null"
-			class="mb-3 flex justify-end"
+			class="mb-3 flex flex-wrap justify-end gap-2"
 		>
 			<Button
-				:label="t('Order.actions.print')"
+				:label="t('Order.actions.printOrder')"
 				icon="pi pi-print"
 				severity="secondary"
 				outlined
-				:disabled="!canPrint"
-				:loading="printing"
+				:disabled="!canRun1CActions || running1CAction"
+				:loading="printingOrder"
 				@click="printOrder"
+			/>
+			<Button
+				:label="t('Order.actions.createShipment')"
+				icon="pi pi-truck"
+				severity="secondary"
+				outlined
+				:disabled="!canRun1CActions || running1CAction"
+				:loading="creatingShipment"
+				@click="createShipment"
+			/>
+			<Button
+				:label="t('Order.actions.printShipment')"
+				icon="pi pi-file-pdf"
+				severity="secondary"
+				outlined
+				:disabled="!canRun1CActions || running1CAction"
+				:loading="printingShipment"
+				@click="printShipment"
 			/>
 		</div>
 

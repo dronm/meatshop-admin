@@ -11,6 +11,7 @@ import { orderListFromDTO } from "@/schemas/orderList.gen";
 import type {
 	OrderDetail,
 	OrderDocument,
+	Order1CJobResponse,
 	OrderKey,
 } from "@/types/orderDocument";
 import type {
@@ -20,6 +21,19 @@ import type {
 
 const ORDER_PRINT_TIMEOUT = 60_000;
 const basePath = "/order";
+
+const orderIDsRequest = (
+	orderIDs: readonly number[],
+): { order_ids: number[] } => {
+	if (
+		orderIDs.length === 0 ||
+		orderIDs.some((id) => !Number.isInteger(id) || id <= 0)
+	) {
+		throw new Error("Не выбраны заказы для выполнения команды.");
+	}
+
+	return { order_ids: [...orderIDs] };
+};
 
 const list = async (
 	params?: CollectionParams,
@@ -64,9 +78,27 @@ export const orderDocumentApi = {
 		return orderDetailFromDTO(dto);
 	},
 	delete: remove,
-	print1c: async (key: OrderKey): Promise<Blob> => {
-		return await api.getAttachment(
-			`${basePath}/${key.id}/print-1c`,
+	printOrders1c: async (orderIDs: readonly number[]): Promise<Blob> => {
+		return await api.postAttachment(
+			`${basePath}/print-1c`,
+			orderIDsRequest(orderIDs),
+			{ timeout: ORDER_PRINT_TIMEOUT },
+		);
+	},
+	createShipments1c: async (
+		orderIDs: readonly number[],
+	): Promise<Order1CJobResponse> => {
+		return await api.post<Order1CJobResponse>(
+			`${basePath}/create-shipments-1c`,
+			orderIDsRequest(orderIDs),
+		);
+	},
+	printShipments1c: async (
+		orderIDs: readonly number[],
+	): Promise<Blob> => {
+		return await api.postAttachment(
+			`${basePath}/print-shipment-1c`,
+			orderIDsRequest(orderIDs),
 			{ timeout: ORDER_PRINT_TIMEOUT },
 		);
 	},

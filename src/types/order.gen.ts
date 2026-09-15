@@ -6,6 +6,7 @@ export interface OrderDTO {
 	for_date: string;
 	number_1c: string | null;
 	ref_1c: Record<string, unknown> | null;
+	shipment_ref_1c: Record<string, unknown> | null;
 	customer_id: number;
 	customer_sale_place_id: number;
 	customer_user_id: number | null;
@@ -20,6 +21,7 @@ export interface Order {
 	for_date: Date;
 	number_1c: string | null;
 	ref_1c: Record<string, unknown> | null;
+	shipment_ref_1c: Record<string, unknown> | null;
 	customer_id: number;
 	customer_sale_place_id: number;
 	customer_user_id: number | null;
@@ -34,11 +36,11 @@ export type OrderKey = Pick<
 >;
 export type OrderNew = Pick<
 	Order,
-	"for_date" | "number_1c" | "ref_1c" | "customer_id" | "customer_sale_place_id" | "customer_user_id" | "status_id" | "comment_customer" | "comment_admin"
+	"for_date" | "number_1c" | "ref_1c" | "shipment_ref_1c" | "customer_id" | "customer_sale_place_id" | "customer_user_id" | "status_id" | "comment_customer" | "comment_admin"
 >;
 export type OrderUpd = Partial<Pick<
 	Order,
-	"for_date" | "number_1c" | "ref_1c" | "customer_id" | "customer_sale_place_id" | "customer_user_id" | "status_id" | "comment_customer" | "comment_admin"
+	"for_date" | "number_1c" | "ref_1c" | "shipment_ref_1c" | "customer_id" | "customer_sale_place_id" | "customer_user_id" | "status_id" | "comment_customer" | "comment_admin"
 >>;
 
 export interface OrderUpdate {

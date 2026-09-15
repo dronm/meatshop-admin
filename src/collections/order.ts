@@ -6,11 +6,14 @@ import {
 } from "@katren/vue-collection-lib";
 
 import { orderListApi } from "@/api/orderDocument";
+import { i18n } from "@/i18n";
 import type { OrderKey } from "@/types/orderDocument";
 import type { OrderList } from "@/types/orderList.gen";
+import { createOrderShipments } from "@/utils/order1cActions";
 import {
 	hasOrder1CReference,
 	openOrderPrintPopup,
+	openShipmentPrintPopup,
 } from "@/utils/orderPrintPopup";
 
 const formatOrderDateTime = (value: unknown): string => {
@@ -131,17 +134,76 @@ const columns: GridColumn<OrderList>[] = [
 	},
 ];
 
-const printCommand: GridCommand<OrderList, OrderKey> = {
-	name: "print1c",
-	labelKey: "Order.actions.print",
+const commandOrderIDs = (rows: readonly OrderList[]): number[] | null => {
+	if (rows.length === 0) {
+		return null;
+	}
+
+	const missingReferenceIDs = rows
+		.filter((row) => !hasOrder1CReference(row.ref_1c))
+		.map((row) => row.id);
+
+	if (missingReferenceIDs.length > 0) {
+		window.alert(
+			String(
+				i18n.global.t(
+					"Order.feedback.missing1cReferences",
+					{
+						ids: missingReferenceIDs.join(
+							", ",
+						),
+					},
+				),
+			),
+		);
+		return null;
+	}
+
+	return rows.map((row) => row.id);
+};
+
+const printOrderCommand: GridCommand<OrderList, OrderKey> = {
+	name: "printOrder1c",
+	labelKey: "Order.actions.printOrder",
 	icon: "pi pi-print",
-	enabled: (row) => row !== null && hasOrder1CReference(row.ref_1c),
-	handler: async ({ row }): Promise<void> => {
-		if (row === null || !hasOrder1CReference(row.ref_1c)) {
+	enabled: (row) => row !== null,
+	handler: async ({ rows }): Promise<void> => {
+		const orderIDs = commandOrderIDs(rows);
+		if (orderIDs === null) {
 			return;
 		}
 
-		await openOrderPrintPopup(row.id);
+		await openOrderPrintPopup(orderIDs);
+	},
+};
+
+const createShipmentsCommand: GridCommand<OrderList, OrderKey> = {
+	name: "createShipments1c",
+	labelKey: "Order.actions.createShipment",
+	icon: "pi pi-truck",
+	enabled: (row) => row !== null,
+	handler: async ({ rows }): Promise<void> => {
+		const orderIDs = commandOrderIDs(rows);
+		if (orderIDs === null) {
+			return;
+		}
+
+		await createOrderShipments(orderIDs);
+	},
+};
+
+const printShipmentCommand: GridCommand<OrderList, OrderKey> = {
+	name: "printShipment1c",
+	labelKey: "Order.actions.printShipment",
+	icon: "pi pi-file-pdf",
+	enabled: (row) => row !== null,
+	handler: async ({ rows }): Promise<void> => {
+		const orderIDs = commandOrderIDs(rows);
+		if (orderIDs === null) {
+			return;
+		}
+
+		await openShipmentPrintPopup(orderIDs);
 	},
 };
 
@@ -149,7 +211,9 @@ const commands: GridCommand<OrderList, OrderKey>[] = [
 	{ name: "create" },
 	{ name: "edit" },
 	{ name: "copy" },
-	printCommand,
+	printOrderCommand,
+	createShipmentsCommand,
+	printShipmentCommand,
 	{ name: "delete" },
 	{ name: "search" },
 	{ name: "refresh" },

@@ -5,6 +5,7 @@ export interface OrderListDTO {
 	number_1c: string | null;
 	for_date: string;
 	ref_1c: Record<string, unknown> | null;
+	shipment_ref_1c: Record<string, unknown> | null;
 	customer_id: number;
 	customer: Record<string, unknown>;
 	customer_sale_place: Record<string, unknown>;
@@ -19,6 +20,7 @@ export interface OrderList {
 	number_1c: string | null;
 	for_date: Date;
 	ref_1c: Record<string, unknown> | null;
+	shipment_ref_1c: Record<string, unknown> | null;
 	customer_id: number;
 	customer: Record<string, unknown>;
 	customer_sale_place: Record<string, unknown>;

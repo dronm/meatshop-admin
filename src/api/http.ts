@@ -1,6 +1,7 @@
 import {
 	Conn,
 	APIError,
+	apiErrorMessageFromBody,
 	type ConnRequestOptions,
 } from "@katren/vue-collection-lib/api/Conn";
 
@@ -14,14 +15,17 @@ class ProjectConn extends Conn {
 		super(baseURL, timeout);
 	}
 
-	public async getAttachment(
+	private async requestAttachment(
 		endpoint: string,
+		method: "GET" | "POST",
+		data: unknown,
 		requestOptions: ConnRequestOptions = {},
 	): Promise<Blob> {
 		const timeout = requestOptions.timeout ?? this.timeout;
 		const controller = new AbortController();
 		let timeoutID: ReturnType<typeof setTimeout> | undefined;
 		let timedOut = false;
+		let responseStatus = 0;
 
 		const abortRequest = (): void => {
 			controller.abort();
@@ -46,37 +50,108 @@ class ProjectConn extends Conn {
 
 		try {
 			const response = await fetch(this.buildUrl(endpoint), {
-				method: "GET",
+				method,
 				credentials: "include",
 				signal: controller.signal,
+				body:
+					method === "POST" && data !== undefined
+						? JSON.stringify(data)
+						: undefined,
 				headers: {
 					...this.defaultHTTPHeaders,
 					Accept: "application/pdf",
+					...(method === "POST"
+						? {
+								"Content-Type":
+									"application/json",
+							}
+						: {}),
 					"X-Query-Id": `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`,
 				},
 			});
+			responseStatus = response.status;
 
 			if (!response.ok) {
-				const body = await response.text();
+				const rawBody = await response.text();
+				let body: unknown = rawBody.trim() || null;
+				const contentType =
+					response.headers.get("Content-Type") ??
+					"";
+
+				if (
+					body !== null &&
+					contentType
+						.toLowerCase()
+						.includes("application/json")
+				) {
+					try {
+						body = JSON.parse(
+							rawBody,
+						) as unknown;
+					} catch {
+						// Keep the response text when an upstream returns invalid JSON.
+					}
+				}
+
+				this.response = {
+					body,
+					status: response.status,
+					headers: response.headers,
+					attachment: undefined,
+				};
 				throw new APIError(
-					body.trim() || `request error (${response.status})`,
+					apiErrorMessageFromBody(
+						body,
+						response.status,
+					),
 					response.status,
 					body,
 				);
 			}
 
-			const contentType = response.headers.get("Content-Type") ?? "";
-			if (!contentType.toLowerCase().includes("application/pdf")) {
+			const contentType =
+				response.headers.get("Content-Type") ?? "";
+			if (
+				!contentType
+					.toLowerCase()
+					.includes("application/pdf")
+			) {
+				const body = await response.text();
+				this.response = {
+					body,
+					status: response.status,
+					headers: response.headers,
+					attachment: undefined,
+				};
 				throw new APIError(
 					`Unexpected print response content type: ${contentType || "unknown"}`,
 					response.status,
+					body,
 				);
 			}
 
-			return await response.blob();
+			const attachment = await response.blob();
+			this.response = {
+				body: null,
+				status: response.status,
+				headers: response.headers,
+				attachment,
+			};
+
+			return attachment;
 		} catch (error: unknown) {
 			if (timedOut) {
 				throw new APIError(`request timeout after ${timeout} ms`);
+			}
+
+			if (
+				responseStatus === 401 &&
+				this.isAuthed &&
+				this.unlogUser !== null
+			) {
+				this.unlogUser();
+				window.location.href = window.location.origin;
+				throw new Error("Unauthorized");
 			}
 
 			throw error;
@@ -87,6 +162,31 @@ class ProjectConn extends Conn {
 
 			requestOptions.signal?.removeEventListener("abort", abortRequest);
 		}
+	}
+
+	public async getAttachment(
+		endpoint: string,
+		requestOptions: ConnRequestOptions = {},
+	): Promise<Blob> {
+		return await this.requestAttachment(
+			endpoint,
+			"GET",
+			undefined,
+			requestOptions,
+		);
+	}
+
+	public async postAttachment(
+		endpoint: string,
+		data: unknown,
+		requestOptions: ConnRequestOptions = {},
+	): Promise<Blob> {
+		return await this.requestAttachment(
+			endpoint,
+			"POST",
+			data,
+			requestOptions,
+		);
 	}
 
 	public put<T = unknown>(

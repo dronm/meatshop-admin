@@ -131,7 +131,14 @@
 			}
 		},
 		"actions": {
-			"print": "Печать"
+			"printOrder": "Печать заказа",
+			"createShipment": "Создать отгрузку",
+			"printShipment": "Печать отгрузки"
+		},
+		"feedback": {
+			"missing1cReferences": "Не заданы ссылки на документы 1С для заказов: {ids}.",
+			"createShipmentAccepted": "Задание №{jobId} на создание отгрузок принято. Статус: {status}.",
+			"createShipmentFailed": "Не удалось поставить создание отгрузок в очередь."
 		},
 		"fields": {
 			"comment_customer": "Комментарий клиента",

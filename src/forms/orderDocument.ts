@@ -36,6 +36,7 @@ export const createOrderDocumentFormModel = (): OrderFormModel => ({
 	for_date: new Date(),
 	number_1c: null,
 	ref_1c: null,
+	shipment_ref_1c: null,
 	customer_id: 0,
 	customer: null,
 	customer_sale_place_id: 0,
@@ -57,6 +58,7 @@ export const orderDocumentToFormModel = (
 	for_date: detail.for_date,
 	number_1c: detail.number_1c,
 	ref_1c: detail.ref_1c,
+	shipment_ref_1c: detail.shipment_ref_1c,
 	customer_id: detail.customer_id,
 	customer: detail.customer,
 	customer_sale_place_id: detail.customer_sale_place_id,
@@ -85,6 +87,7 @@ export const copyOrderDocumentFormModel = (
 	version: 0,
 	number_1c: null,
 	ref_1c: null,
+	shipment_ref_1c: null,
 	items: copiedItems(detail.items),
 } as OrderFormModel);
 
@@ -116,6 +119,7 @@ export const orderFormModelToDocument = (
 		for_date: form.for_date as Date,
 		number_1c: optionalText(form.number_1c),
 		ref_1c: normalizeRef1C(form.ref_1c),
+		shipment_ref_1c: normalizeRef1C(form.shipment_ref_1c),
 		customer_id: form.customer_id ?? 0,
 		customer_sale_place_id: form.customer_sale_place_id ?? 0,
 		customer_user_id: optionalID(form.customer_user_id),
