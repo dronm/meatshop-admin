@@ -16,6 +16,45 @@
 			"copy": "Копия покупателя"
 		}
 	},
+	"MaxInMessage": {
+		"title": "Входящие сообщения MAX",
+		"fields": {
+			"created_at": "Получено",
+			"id": "ID",
+			"max_chat_id": "max chat id",
+			"max_user": "Пользователь MAX",
+			"max_user_id": "max user id",
+			"message": "message",
+			"update_type": "update type"
+		},
+		"form": {
+			"create": "Входящие сообщения MAX",
+			"edit": "Входящие сообщения MAX",
+			"copy": "Входящие сообщения MAX"
+		}
+	},
+	"MaxOutMessage": {
+		"title": "Исходящие сообщения MAX",
+		"fields": {
+			"attempt_count": "attempt count",
+			"created_at": "Создано",
+			"error_str": "error str",
+			"id": "ID",
+			"locked_at": "locked at",
+			"max_user": "Пользователь MAX",
+			"max_user_id": "max user id",
+			"message": "message",
+			"metadata": "metadata",
+			"next_attempt_at": "next attempt at",
+			"sent_at": "sent at",
+			"status": "status"
+		},
+		"form": {
+			"create": "Исходящие сообщения MAX",
+			"edit": "Исходящие сообщения MAX",
+			"copy": "Исходящие сообщения MAX"
+		}
+	},
 	"MaxUser": {
 		"title": "Пользователи MAX",
 		"fields": {

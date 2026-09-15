@@ -5,6 +5,8 @@ import type { RouteRecordRaw } from "vue-router";
 import type { ApplicationRouteManifestItem } from "@katren/vue-business-app/application-routes";
 const CustomerList = () => import("@/views/customer/CustomerList.vue");
 const CustomerEditPage = () => import("@/views/customer/CustomerEditPage.vue");
+const MaxInMessageList = () => import("@/views/maxInMessage/MaxInMessageList.vue");
+const MaxOutMessageList = () => import("@/views/maxOutMessage/MaxOutMessageList.vue");
 const MaxUserList = () => import("@/views/maxUser/MaxUserList.vue");
 const MeasureUnitList = () => import("@/views/measureUnit/MeasureUnitList.vue");
 const MeasureUnitEditPage = () => import("@/views/measureUnit/MeasureUnitEditPage.vue");
@@ -69,6 +71,32 @@ export const generatedRouteManifest: GeneratedRouteManifestEntry[] = [
 			section: "Формы",
 			icon: null,
 			menu_available: false,
+		},
+	),
+	defineGeneratedRoute(
+		{
+			path: "/max-in-messages",
+			name: "maxInMessages",
+			component: MaxInMessageList,
+		},
+		{
+			descr: "Входящие сообщения MAX",
+			section: "Администрирование",
+			icon: "pi pi-inbox",
+			menu_available: true,
+		},
+	),
+	defineGeneratedRoute(
+		{
+			path: "/max-out-messages",
+			name: "maxOutMessages",
+			component: MaxOutMessageList,
+		},
+		{
+			descr: "Исходящие сообщения MAX",
+			section: "Администрирование",
+			icon: "pi pi-send",
+			menu_available: true,
 		},
 	),
 	defineGeneratedRoute(
