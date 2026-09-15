@@ -21,7 +21,7 @@ const translate = (
 export const businessAppConfig: BusinessAppConfig<RoleId> = {
 	api,
 	branding: {
-		title: "Myasomasters",
+		title: "Myasmasters",
 		subtitle: "Система управления",
 		fallbackMark: "Meatshop",
 	},
