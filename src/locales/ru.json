@@ -1,0 +1,186 @@
+{
+	"Login": {
+		"title": "АВТОРИЗАЦИЯ",
+		"login": {
+			"label": "",
+			"placeholder": "логин"
+		},
+		"pwd": {
+			"label": "",
+			"placeholder": "пароль"
+		},
+		"submit": "войти"
+	},
+	"Main": {
+		"title": "Главная"
+	},
+	"RoleId": {
+		"admin": "Администратор"
+	},
+	"User": {
+		"title": "Пользователи",
+		"fields": {
+			"id": "ID",
+			"name": "Логин",
+			"role_id": "Роль",
+			"pwd": "Пароль",
+			"max_user_id": "Пользователь MAX"
+		},
+		"form": {
+			"create": "Создание: Пользователи",
+			"edit": "Изменение: Пользователи",
+			"copy": "Копирование: Пользователи",
+			"view": "Просмотр: Пользователи"
+		},
+		"errors": {
+			"invalidId": "Некорректный идентификатор пользователя"
+		}
+	},
+	"Grid": {
+		"commands": {
+			"create": "Создать",
+			"edit": "Изменить",
+			"copy": "Копировать",
+			"delete": "Удалить",
+			"search": "Поиск",
+			"refresh": "Обновить",
+			"save": "Сохранить",
+			"cancel": "Отмена",
+			"back": "Назад",
+			"history": "История",
+			"clear": "Очистить"
+		},
+		"loading": "Загрузка...",
+		"copySuffix": "копия"
+	},
+	"Report": {
+		"commands": {
+			"generate": "Сформировать",
+			"exportExcel": "Экспорт в Excel",
+			"print": "Печать"
+		},
+		"filters": {
+			"referenceRequired": "Выберите значение",
+			"referenceDuplicate": "Это значение уже выбрано"
+		}
+	},
+	"validation": {
+		"required": "Поле обязательно для заполнения",
+		"maxLen": "Максимальная длина: {maxLen}",
+		"minVal": "Минимальное значение: {minVal}",
+		"maxVal": "Максимальное значение: {maxVal}",
+		"dataTypeInt": "Ожидается целое число"
+	},
+	"Customer": {
+		"tabs": {
+			"common": "Общие",
+			"salePoints": "Точки продаж",
+			"users": "Пользователи"
+		},
+		"details": {
+			"saveFirst": "Сначала сохраните покупателя."
+		}
+	},
+	"CustomerSalePlace": {
+		"fields": {
+			"name": "Наименование",
+			"address": "Адрес",
+			"kpp": "КПП",
+			"ref_1c": "Контрагент 1С"
+		}
+	},
+	"CustomerUser": {
+		"fields": {
+			"avatar_url": "Фото",
+			"max_user_id": "MAX ID",
+			"username": "Пользователь",
+			"is_active": "Активен"
+		}
+	},
+	"Product": {
+		"hierarchy": {
+			"root": "Продукция",
+			"createItem": "Новая продукция",
+			"createGroup": "Новая группа"
+		}
+	},
+	"Order": {
+		"tabs": {
+			"document": "Документ",
+			"integration1c": "Интеграция 1С"
+		},
+		"integration1c": {
+			"saveFirst": "Сначала сохраните документ.",
+			"reference": "Ссылка на документ 1С",
+			"refDescr": "Представление",
+			"refId": "UUID",
+			"noReference": "Документ еще не создан в 1С.",
+			"jobs": "Задания интеграции"
+		},
+		"items": {
+			"title": "Товары",
+			"fields": {
+				"line_num": "№",
+				"product_id": "Продукция",
+				"measure_unit_id": "Ед. изм.",
+				"quant_required": "Количество заказано",
+				"quant": "Количество"
+			},
+			"errors": {
+				"required": "Добавьте хотя бы одну позицию заказа"
+			}
+		},
+		"actions": {
+			"print": "Печать"
+		},
+		"fields": {
+			"comment_customer": "Комментарий клиента",
+			"comment_admin": "Комментарий",
+			"number_1c": "Номер 1С"
+		}
+	},
+	"Integration1CJob": {
+		"fields": {
+			"id": "ID",
+			"command": "Команда",
+			"status": "Статус",
+			"attempt_count": "Попыток",
+			"max_attempts": "Макс. попыток",
+			"created_at": "Создано",
+			"started_at": "Начато",
+			"completed_at": "Завершено",
+			"last_error": "Ошибка",
+			"params": "Параметры",
+			"available_at": "Доступно с"
+		},
+		"status": {
+			"queued": "В очереди",
+			"processing": "Выполняется",
+			"completed": "Выполнено"
+		}
+	},
+	"NotificationTemplate": {
+		"title": "Шаблоны уведомлений",
+		"fields": {
+			"id": "ID",
+			"code": "Код",
+			"event": "Событие",
+			"body_template": "Шаблон сообщения",
+			"is_active": "Активен"
+		},
+		"form": {
+			"create": "Создание: Шаблон уведомления",
+			"edit": "Изменение: Шаблон уведомления",
+			"copy": "Копирование: Шаблон уведомления"
+		},
+		"recipients": {
+			"title": "Получатели",
+			"saveFirst": "Сначала сохраните шаблон уведомления."
+		}
+	},
+	"NotificationTemplateRecipient": {
+		"fields": {
+			"user_id": "Пользователь"
+		}
+	}
+}

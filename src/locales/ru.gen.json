@@ -1,0 +1,95 @@
+{
+	"Customer": {
+		"title": "Покупатели",
+		"fields": {
+			"allow_holiday_orders": "Заказы в праздники",
+			"id": "ID",
+			"inn": "ИНН",
+			"is_active": "Активна",
+			"kpp": "КПП",
+			"name": "Наименование",
+			"ref_1c": "Ссылка 1с"
+		},
+		"form": {
+			"create": "Новый покупатель",
+			"edit": "Покупатель",
+			"copy": "Копия покупателя"
+		}
+	},
+	"MaxUser": {
+		"title": "Пользователи MAX",
+		"fields": {
+			"app_username": "ФИО пользователя",
+			"customer": "Клиент",
+			"customer_id": "Клиент",
+			"customer_sale_place": "Точка продажи",
+			"customer_sale_place_id": "Точка продажи",
+			"is_active": "Активен",
+			"max_user_id": "Идентификатор MAX",
+			"username": "Имя пользователя MAX"
+		},
+		"form": {
+			"create": "Новый пользователь MAX",
+			"edit": "Пользователь MAX",
+			"copy": "Копия пользователя MAX"
+		}
+	},
+	"MeasureUnit": {
+		"title": "Единицы измерения",
+		"fields": {
+			"id": "ID",
+			"is_active": "Активна",
+			"name": "Наименование",
+			"name_full": "Полн. наименование"
+		},
+		"form": {
+			"create": "Новaя единица измерения",
+			"edit": "единица измерения",
+			"copy": "Копия единица измерения"
+		}
+	},
+	"Order": {
+		"title": "Заказы",
+		"fields": {
+			"comment_admin": "Комментарий наш",
+			"comment_customer": "Комментарий заказчика",
+			"customer": "Заказчик",
+			"customer_id": "Заказчик",
+			"customer_sale_place": "Точка",
+			"customer_sale_place_id": "Точка продаж",
+			"customer_user": "Пользователь",
+			"customer_user_id": "Пользователь",
+			"for_date": "На дату",
+			"id": "ID",
+			"number_1c": "Номер 1с",
+			"ref_1c": "Ссылка 1с",
+			"status": "Статус",
+			"status_id": "Статус"
+		},
+		"form": {
+			"create": "Новый заказ",
+			"edit": "Заказ",
+			"copy": "Копия заказа"
+		}
+	},
+	"Product": {
+		"title": "Продукция",
+		"fields": {
+			"description": "Описание",
+			"id": "ID",
+			"is_active": "Активна",
+			"is_group": "Это группа",
+			"measure_unit": "Единица",
+			"measure_unit_id": "Единица",
+			"name": "Наименование",
+			"parent_id": "Группа",
+			"ref_1c": "Ссылка 1С",
+			"sort_order": "Порядок сортировки"
+		},
+		"form": {
+			"create": "Новая продукция",
+			"edit": "Продукция",
+			"copy": "Копия продукции"
+		}
+	}
+}

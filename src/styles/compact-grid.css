@@ -1,0 +1,160 @@
+/* Compact data grid density overrides. */
+:root {
+	--app-grid-font-size: 0.8125rem;
+	--app-grid-small-font-size: 0.75rem;
+	--app-grid-cell-padding-y: 0.25rem;
+	--app-grid-cell-padding-x: 0.5rem;
+	--app-grid-header-padding-y: 0.35rem;
+	--app-grid-header-padding-x: 0.5rem;
+}
+
+.p-datatable {
+	font-size: var(--app-grid-font-size);
+}
+
+.p-datatable .p-datatable-thead > tr > th,
+.p-datatable .p-datatable-tbody > tr > td,
+.p-datatable .p-datatable-tfoot > tr > td {
+	padding: var(--app-grid-cell-padding-y) var(--app-grid-cell-padding-x);
+	line-height: 1.2;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+	padding: var(--app-grid-header-padding-y) var(--app-grid-header-padding-x);
+	font-size: var(--app-grid-small-font-size);
+	font-weight: 600;
+}
+
+.p-datatable .p-sortable-column .p-sortable-column-icon,
+.p-datatable .p-column-filter-menu-button,
+.p-datatable .p-column-filter-clear-button {
+	width: 1rem;
+	height: 1rem;
+	font-size: var(--app-grid-small-font-size);
+}
+
+.p-datatable .p-datatable-tbody > tr {
+	height: 1.75rem;
+}
+
+.p-datatable .p-datatable-tbody > tr > td > * {
+	line-height: 1.2;
+}
+
+.p-paginator {
+	gap: 0.15rem;
+	padding: 0.25rem 0.5rem;
+	font-size: var(--app-grid-small-font-size);
+}
+
+.p-paginator .p-paginator-page,
+.p-paginator .p-paginator-first,
+.p-paginator .p-paginator-prev,
+.p-paginator .p-paginator-next,
+.p-paginator .p-paginator-last {
+	min-width: 1.75rem;
+	height: 1.75rem;
+	padding: 0;
+}
+
+.p-paginator .p-select {
+	height: 1.75rem;
+	font-size: var(--app-grid-small-font-size);
+}
+
+.p-button {
+	font-size: var(--app-grid-font-size);
+}
+
+.p-button.p-button-sm,
+.p-datatable .p-button,
+.collection-grid .p-button,
+.crud-grid .p-button {
+	padding: 0.25rem 0.5rem;
+	font-size: var(--app-grid-small-font-size);
+	line-height: 1.2;
+}
+
+.p-button .p-button-icon {
+	font-size: var(--app-grid-small-font-size);
+}
+
+.p-inputtext,
+.p-select,
+.p-multiselect,
+.p-textarea,
+.p-inputnumber-input {
+	font-size: var(--app-grid-font-size);
+}
+
+.p-inputtext,
+.p-select-label,
+.p-multiselect-label,
+.p-inputnumber-input {
+	padding: 0.25rem 0.5rem;
+}
+
+.p-select,
+.p-multiselect {
+	min-height: 1.9rem;
+}
+
+.p-dialog .p-dialog-header {
+	padding: 0.75rem 1rem;
+}
+
+.p-dialog .p-dialog-content {
+	padding: 0 1rem 1rem;
+}
+
+.p-dialog .p-dialog-footer {
+	padding: 0.75rem 1rem;
+}
+
+.p-dialog-title {
+	font-size: 1rem;
+}
+
+.p-card .p-card-body,
+.p-card .p-card-content {
+	padding: 0.75rem;
+}
+
+.collection-grid,
+.crud-grid,
+[data-grid],
+[data-collection-grid] {
+	font-size: var(--app-grid-font-size);
+}
+
+.collection-grid__toolbar,
+.crud-grid__toolbar,
+.grid-command-panel,
+.collection-command-panel {
+	gap: 0.35rem;
+	padding: 0.35rem 0;
+}
+
+.collection-grid__title,
+.crud-grid__title {
+	font-size: 1rem;
+}
+
+/* Compact collection search dialog header.
+   This selector must be more specific than the generic PrimeVue dialog rules above. */
+.p-dialog.crud-grid-search-dialog .p-dialog-header {
+	min-height: 0 !important;
+	padding: 0.125rem 0.5rem !important;
+}
+
+.p-dialog.crud-grid-search-dialog .crud-grid-search-dialog-title {
+	font-size: 0.75rem !important;
+	line-height: 0.875rem !important;
+}
+
+.p-dialog.crud-grid-search-dialog .crud-grid-search-dialog-close {
+	font-size: 1rem !important;
+	height: 1.25rem !important;
+	min-height: 1.25rem !important;
+	width: 1.25rem !important;
+}

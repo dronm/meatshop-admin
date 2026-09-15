@@ -1,0 +1,50 @@
+{
+	"name": "meatshop-admin",
+	"private": true,
+	"version": "0.1.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "vue-tsc -b && vite build",
+		"preview": "vite preview",
+		"build-only": "vite build",
+		"type-check": "vue-tsc --build",
+		"format": "prettier --write src/"
+	},
+	"dependencies": {
+		"@fortawesome/fontawesome-svg-core": "^7.2.0",
+		"@fortawesome/free-brands-svg-icons": "^7.2.0",
+		"@fortawesome/free-regular-svg-icons": "^7.2.0",
+		"@fortawesome/free-solid-svg-icons": "^7.2.0",
+		"@fortawesome/vue-fontawesome": "^3.2.0",
+		"@katren/vue-business-app": "^0.1.2",
+		"@katren/vue-collection-lib": "^0.1.8",
+		"@primeuix/themes": "^2.0.3",
+		"maska": "^3.2.0",
+		"pinia": "^3.0.4",
+		"primeicons": "^7.0.0",
+		"primelocale": "^2.4.0",
+		"primevue": "^4.5.5",
+		"valibot": "^1.4.1",
+		"vue": "^3.5.34",
+		"vue-i18n": "^11.4.5",
+		"vue-router": "^5.1.0"
+	},
+	"prettier": {
+		"useTabs": true,
+		"tabWidth": 8,
+		"semi": true,
+		"singleQuote": false,
+		"trailingComma": "all"
+	},
+	"devDependencies": {
+		"@tailwindcss/vite": "^4.1.17",
+		"@types/node": "^24.13.1",
+		"@vitejs/plugin-vue": "^6.0.6",
+		"@vue/tsconfig": "^0.9.1",
+		"prettier": "3.8.3",
+		"typescript": "~6.0.2",
+		"vite": "^8.0.12",
+		"vue-tsc": "^3.2.8"
+	}
+}

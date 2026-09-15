@@ -1,0 +1,610 @@
+@import "tailwindcss";
+@source "../../../packages/vue-business-app/src";
+@source "../node_modules/@katren/vue-business-app/src";
+
+:root {
+	color-scheme: light;
+	font-synthesis: none;
+}
+
+html,
+body,
+#app {
+	min-height: 100%;
+}
+
+body {
+	margin: 0;
+	background: rgb(241 245 249);
+	color: rgb(15 23 42);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+	background: rgb(165 243 252);
+	color: rgb(22 78 99);
+}
+
+.compact-form-page,
+.compact-form {
+	font-size: 0.8125rem;
+}
+
+.compact-form {
+	line-height: 1.25rem;
+}
+
+.compact-form .compact-section {
+	padding: 0.65rem 0.75rem;
+}
+
+.compact-form .compact-section-title {
+	margin-bottom: 0.45rem;
+	font-size: 0.9rem;
+	line-height: 1.2rem;
+}
+
+.compact-form .compact-grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 0.45rem 0.75rem;
+}
+
+@media (min-width: 1024px) {
+	.compact-form .compact-grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.compact-form .compact-grid--single {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+.compact-form .compact-field {
+	display: grid;
+	grid-template-columns: 7.5rem minmax(0, 1fr);
+	align-items: center;
+	gap: 0.25rem 0.5rem;
+	min-width: 0;
+}
+
+.compact-form .compact-field > label {
+	justify-self: end;
+	color: rgb(71 85 105);
+	font-size: 0.75rem;
+	line-height: 1rem;
+	white-space: nowrap;
+}
+
+.compact-form .compact-field > small {
+	grid-column: 2;
+	font-size: 0.72rem;
+	line-height: 0.95rem;
+}
+
+.compact-form .compact-field--checkbox {
+	align-content: center;
+}
+
+.compact-form .compact-field--checkbox > div {
+	grid-column: 2;
+}
+
+.compact-form .p-inputtext,
+.compact-form .p-select-label,
+.compact-form-page .p-inputtext,
+.compact-form-page .p-select-label {
+	padding: 0.25rem 0.5rem !important;
+	font-size: 0.8125rem !important;
+	line-height: 1.15rem !important;
+}
+
+.compact-form .p-textarea,
+.compact-form-page .p-textarea {
+	font-size: 0.8125rem !important;
+}
+
+.compact-form .p-select,
+.compact-form .p-autocomplete,
+.compact-form .p-inputnumber,
+.compact-form .p-inputnumber-input,
+.compact-form .p-autocomplete-input,
+.compact-form-page .p-select,
+.compact-form-page .p-autocomplete,
+.compact-form-page .p-inputnumber,
+.compact-form-page .p-inputnumber-input,
+.compact-form-page .p-autocomplete-input {
+	width: 100%;
+}
+
+.compact-form .p-button,
+.compact-form-page .p-button {
+	padding: 0.28rem 0.55rem !important;
+	font-size: 0.8125rem !important;
+}
+
+.compact-form .p-button.p-button-sm,
+.compact-form-page .p-button.p-button-sm {
+	padding: 0.2rem 0.45rem !important;
+	font-size: 0.75rem !important;
+}
+
+.compact-table {
+	font-size: 0.78rem;
+	line-height: 1.15rem;
+}
+
+.compact-table th,
+.compact-table td {
+	padding: 0.14rem 0.35rem !important;
+}
+
+.compact-form-page .p-datatable .p-datatable-thead > tr > th,
+.compact-form-page .p-datatable .p-datatable-tbody > tr > td,
+.compact-form-page .p-datatable .p-datatable-tfoot > tr > td {
+	padding: 0.14rem 0.35rem !important;
+	font-size: 0.75rem !important;
+	line-height: 1.05rem !important;
+}
+
+.compact-form-page .p-paginator {
+	padding: 0.12rem 0.2rem !important;
+	font-size: 0.75rem !important;
+}
+
+@media (max-width: 767px) {
+	.compact-form .compact-field {
+		grid-template-columns: 1fr;
+	}
+
+	.compact-form .compact-field > label,
+	.compact-form .compact-field > small,
+	.compact-form .compact-field--checkbox > div {
+		grid-column: 1;
+		justify-self: start;
+	}
+}
+
+/* Global compact layout for all entity edit forms and grids. */
+form {
+	font-size: 0.8125rem;
+	line-height: 1.2rem;
+}
+
+form label,
+form small,
+.p-component,
+.p-inputtext,
+.p-button,
+.p-select,
+.p-autocomplete,
+.p-inputnumber,
+.p-textarea,
+.p-dropdown,
+.p-multiselect,
+.p-datepicker,
+.p-checkbox,
+.p-radiobutton {
+	font-size: 0.8125rem;
+}
+
+form > .grid,
+form .grid.grid-cols-1 {
+	gap: 0.45rem 0.75rem !important;
+}
+
+@media (min-width: 1024px) {
+	form > .grid,
+	form .grid.grid-cols-1.md\:grid-cols-2,
+	form .grid.grid-cols-1.lg\:grid-cols-2,
+	form .grid.grid-cols-1.lg\:grid-cols-3 {
+		grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+	}
+
+	form .grid.grid-cols-1.form-two-column-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+	}
+}
+
+form .flex.flex-col.gap-1,
+form .field,
+form .form-field {
+	display: grid !important;
+	grid-template-columns: 7.5rem minmax(0, 1fr);
+	align-items: center;
+	gap: 0.2rem 0.5rem !important;
+	min-width: 0;
+}
+
+form .flex.flex-col.gap-1 > label,
+form .field > label,
+form .form-field > label {
+	justify-self: end;
+	color: rgb(71 85 105);
+	font-size: 0.75rem;
+	line-height: 1rem;
+	white-space: nowrap;
+}
+
+form .flex.flex-col.gap-1 > small,
+form .field > small,
+form .form-field > small {
+	grid-column: 2;
+	font-size: 0.72rem;
+	line-height: 0.95rem;
+}
+
+form .flex.items-center.gap-2,
+form .flex.items-center.gap-3 {
+	gap: 0.4rem !important;
+	padding-top: 0.25rem !important;
+}
+
+form .space-y-4 > :not([hidden]) ~ :not([hidden]),
+.space-y-4 > form :not([hidden]) ~ :not([hidden]) {
+	--tw-space-y-reverse: 0;
+	margin-top: calc(
+		0.55rem * calc(1 - var(--tw-space-y-reverse))
+	) !important;
+	margin-bottom: calc(0.55rem * var(--tw-space-y-reverse)) !important;
+}
+
+.p-inputtext,
+.p-inputnumber-input,
+.p-autocomplete-input,
+.p-select-label,
+.p-dropdown-label,
+.p-multiselect-label,
+.p-datepicker-input,
+.p-textarea {
+	padding: 0.25rem 0.5rem !important;
+	font-size: 0.8125rem !important;
+	line-height: 1.15rem !important;
+}
+
+.p-autocomplete input,
+.p-autocomplete .p-inputtext,
+.p-autocomplete-input,
+.p-autocomplete-token,
+.p-autocomplete-token-label,
+.p-autocomplete-option,
+.p-autocomplete-items,
+.p-autocomplete-list,
+.p-autocomplete-panel,
+.p-autocomplete-empty-message,
+.p-select-option,
+.p-dropdown-item,
+.p-multiselect-option {
+	font-size: 0.8125rem !important;
+	line-height: 1.15rem !important;
+}
+
+.p-autocomplete-option,
+.p-select-option,
+.p-dropdown-item,
+.p-multiselect-option,
+.p-autocomplete-empty-message {
+	padding: 0.25rem 0.5rem !important;
+}
+
+.p-autocomplete-panel,
+.p-select-overlay,
+.p-dropdown-panel,
+.p-multiselect-overlay {
+	font-size: 0.8125rem !important;
+}
+
+.p-button {
+	padding: 0.28rem 0.55rem !important;
+	font-size: 0.8125rem !important;
+	line-height: 1.15rem !important;
+}
+
+.p-button.p-button-sm,
+.p-button-sm {
+	padding: 0.2rem 0.45rem !important;
+	font-size: 0.75rem !important;
+	line-height: 1rem !important;
+}
+
+.p-datatable,
+.p-treetable,
+.collection-grid,
+.collection-grid-root {
+	font-size: 0.75rem !important;
+	line-height: 1.05rem !important;
+}
+
+.p-datatable .p-datatable-thead > tr > th,
+.p-datatable .p-datatable-tbody > tr > td,
+.p-datatable .p-datatable-tfoot > tr > td,
+.p-treetable .p-treetable-thead > tr > th,
+.p-treetable .p-treetable-tbody > tr > td,
+.p-treetable .p-treetable-tfoot > tr > td,
+table th,
+table td {
+	padding: 0.14rem 0.35rem !important;
+	font-size: 0.75rem !important;
+	line-height: 1.05rem !important;
+}
+
+.p-datatable .p-datatable-tbody > tr,
+.p-treetable .p-treetable-tbody > tr,
+table tbody > tr {
+	height: auto !important;
+}
+
+.p-datatable .p-datatable-column-header-content,
+.p-treetable .p-treetable-column-header-content {
+	gap: 0.2rem !important;
+}
+
+.p-datatable .p-inputtext,
+.p-datatable .p-autocomplete-input,
+.p-datatable .p-select-label,
+.p-datatable .p-button,
+.p-treetable .p-inputtext,
+.p-treetable .p-autocomplete-input,
+.p-treetable .p-select-label,
+.p-treetable .p-button,
+table .p-inputtext,
+table .p-autocomplete-input,
+table .p-select-label,
+table .p-button {
+	font-size: 0.72rem !important;
+	line-height: 0.95rem !important;
+	padding: 0.1rem 0.3rem !important;
+}
+
+.p-datatable .p-button.p-button-icon-only,
+.p-treetable .p-button.p-button-icon-only,
+table .p-button.p-button-icon-only {
+	width: 1.5rem !important;
+	height: 1.5rem !important;
+	padding: 0 !important;
+}
+
+.p-paginator,
+.p-paginator .p-paginator-page,
+.p-paginator .p-select-label,
+.p-paginator .p-button {
+	font-size: 0.75rem !important;
+	line-height: 1rem !important;
+}
+
+.p-paginator {
+	padding: 0.1rem 0.2rem !important;
+}
+
+.p-paginator .p-paginator-page,
+.p-paginator .p-paginator-next,
+.p-paginator .p-paginator-prev,
+.p-paginator .p-paginator-first,
+.p-paginator .p-paginator-last {
+	min-width: 1.5rem !important;
+	height: 1.5rem !important;
+}
+
+.p-toolbar,
+.p-card-body,
+.p-card-content,
+.p-tabs-panel,
+.p-tabpanels {
+	padding: 0.5rem 0.75rem !important;
+}
+
+.p-dialog-content {
+	font-size: 0.8125rem;
+}
+
+@media (max-width: 767px) {
+	form .flex.flex-col.gap-1,
+	form .field,
+	form .form-field {
+		grid-template-columns: 1fr;
+	}
+
+	form .flex.flex-col.gap-1 > label,
+	form .flex.flex-col.gap-1 > small,
+	form .field > label,
+	form .field > small,
+	form .form-field > label,
+	form .form-field > small {
+		grid-column: 1;
+		justify-self: start;
+	}
+}
+
+/* Product AGC uses a two-panel layout with image panel on the left.
+   The right panel keeps two fields per row, with labels at the left. */
+.product-agc-form,
+.product-agc-panel {
+	font-size: 0.8125rem;
+}
+
+.product-agc-form .product-agc-layout,
+.product-agc-panel .product-agc-layout {
+	align-items: start;
+	gap: 1rem !important;
+	width: 100%;
+}
+
+@media (min-width: 1024px) {
+	.product-agc-form .product-agc-layout,
+	.product-agc-panel .product-agc-layout {
+		grid-template-columns: minmax(18rem, 1fr) minmax(0, 2fr) !important;
+	}
+}
+
+@media (min-width: 1280px) {
+	.product-agc-form .product-agc-layout,
+	.product-agc-panel .product-agc-layout {
+		grid-template-columns: minmax(20rem, 1fr) minmax(0, 2fr) !important;
+	}
+}
+
+.product-agc-groups {
+	min-width: 0;
+	width: 100%;
+}
+
+.product-agc-section {
+	background: rgb(255 255 255);
+	padding: 0.65rem 0.75rem;
+}
+
+.product-agc-grid {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 0.45rem 0.75rem;
+}
+
+@media (min-width: 1024px) {
+	.product-agc-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.product-agc-grid--single {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+.product-agc-field {
+	display: grid;
+	grid-template-columns: 8.25rem minmax(0, 1fr);
+	align-items: center;
+	gap: 0.25rem 0.5rem;
+	min-width: 0;
+}
+
+.product-agc-field > label {
+	justify-self: end;
+	color: rgb(71 85 105);
+	font-size: 0.75rem;
+	line-height: 1rem;
+	max-width: 100%;
+	overflow: hidden;
+	text-align: right;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.product-agc-field > small {
+	grid-column: 2;
+	font-size: 0.72rem;
+	line-height: 0.95rem;
+}
+
+.product-agc-field--checkbox {
+	align-content: center;
+}
+
+.product-agc-field--checkbox > div {
+	grid-column: 2;
+}
+
+.product-agc-field--checkbox label {
+	color: rgb(71 85 105);
+	font-size: 0.75rem;
+	line-height: 1rem;
+}
+
+.product-agc-form .p-inputtext,
+.product-agc-form .p-inputnumber-input,
+.product-agc-form .p-select-label,
+.product-agc-form .p-textarea,
+.product-agc-panel .p-inputtext,
+.product-agc-panel .p-inputnumber-input,
+.product-agc-panel .p-select-label,
+.product-agc-panel .p-textarea {
+	font-size: 0.8125rem !important;
+	line-height: 1.15rem !important;
+	padding: 0.25rem 0.5rem !important;
+}
+
+.product-agc-form .p-inputnumber,
+.product-agc-panel .p-inputnumber {
+	width: 100%;
+}
+
+.product-agc-form .p-disabled,
+.product-agc-form :disabled,
+.product-agc-panel .p-disabled,
+.product-agc-panel :disabled {
+	opacity: 0.95 !important;
+}
+
+.product-agc-table-block {
+	margin-top: 0.65rem;
+}
+
+.product-agc-table {
+	margin-top: 0.35rem;
+	border-collapse: separate;
+	border-spacing: 0;
+	overflow: hidden;
+}
+
+.product-agc-table th,
+.product-agc-table td {
+	padding: 0.16rem 0.35rem !important;
+	font-size: 0.75rem;
+	line-height: 1.05rem;
+}
+
+.product-agc-table tbody tr:last-child td {
+	border-bottom: 0;
+}
+
+@media (max-width: 767px) {
+	.product-agc-field {
+		grid-template-columns: 1fr;
+	}
+
+	.product-agc-field > label,
+	.product-agc-field > small,
+	.product-agc-field--checkbox > div {
+		grid-column: 1;
+		justify-self: start;
+		text-align: left;
+	}
+}
+
+/* Vehicle group field groups: compact, visually subordinate headings. */
+.compact-form .compact-section {
+	padding: 0.45rem 0.55rem;
+}
+
+.compact-form .compact-section-title {
+	margin-bottom: 0.3rem;
+	color: rgb(71 85 105);
+	font-size: 0.78rem;
+	font-weight: 500 !important;
+	line-height: 1rem;
+}
+
+/* Order collection status backgrounds. Keep them subtle so selected-cell and text states remain readable. */
+.p-datatable-tbody > tr > td.order-status-new {
+	background: rgb(239 246 255) !important;
+}
+
+.p-datatable-tbody > tr > td.order-status-accepted {
+	background: rgb(236 254 255) !important;
+}
+
+.p-datatable-tbody > tr > td.order-status-processing {
+	background: rgb(255 251 235) !important;
+}
+
+.p-datatable-tbody > tr > td.order-status-approved {
+	background: rgb(245 243 255) !important;
+}
+
+.p-datatable-tbody > tr > td.order-status-completed {
+	background: rgb(240 253 244) !important;
+}
+
+.p-datatable-tbody > tr > td.order-status-cancelled {
+	background: rgb(254 242 242) !important;
+}

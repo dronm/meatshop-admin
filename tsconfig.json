@@ -1,0 +1,34 @@
+{
+	"compilerOptions": {
+		"paths": {
+			"@/*": [
+				"./src/*"
+			]
+		},
+		"target": "ESNext",
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"strict": true,
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"esModuleInterop": true,
+		"lib": [
+			"dom",
+			"esnext",
+			"es2021"
+		],
+		"allowImportingTsExtensions": true,
+		"noEmit": true,
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true
+	},
+	"files": [],
+	"references": [
+		{
+			"path": "./tsconfig.app.json"
+		},
+		{
+			"path": "./tsconfig.node.json"
+		}
+	]
+}
