@@ -2,8 +2,8 @@
 
 export interface MaxUserListDTO {
 	id: number;
-	customer: Record<string, unknown>;
-	customer_sale_place: Record<string, unknown>;
+	customer: Record<string, unknown> | null;
+	customer_sale_place: Record<string, unknown> | null;
 	max_user_id: number;
 	username: string | null;
 	app_username: string;
@@ -14,8 +14,8 @@ export interface MaxUserListDTO {
 
 export interface MaxUserList {
 	id: number;
-	customer: Record<string, unknown>;
-	customer_sale_place: Record<string, unknown>;
+	customer: Record<string, unknown> | null;
+	customer_sale_place: Record<string, unknown> | null;
 	max_user_id: number;
 	username: string | null;
 	app_username: string;

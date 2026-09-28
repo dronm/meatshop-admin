@@ -17,7 +17,7 @@ type ListModel = OrderList;
 type CreateModel = OrderNew;
 type UpdateModel = OrderUpd;
 const formatDate = (value: unknown): string => value instanceof Date
-	? value.toLocaleString("ru-RU")
+	? value.toLocaleDateString("ru-RU")
 	: "";
 const commands: GridCommand<ListModel, OrderKey>[] = [
 	{ name: "create" },

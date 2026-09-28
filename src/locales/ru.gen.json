@@ -21,11 +21,9 @@
 		"fields": {
 			"created_at": "Получено",
 			"id": "ID",
-			"max_chat_id": "max chat id",
+			"max_chat_id": "Идентификатор чата MAX",
 			"max_user": "Пользователь MAX",
-			"max_user_id": "max user id",
-			"message": "message",
-			"update_type": "update type"
+			"update_type": "Тип обновления"
 		},
 		"form": {
 			"create": "Входящие сообщения MAX",
@@ -36,18 +34,15 @@
 	"MaxOutMessage": {
 		"title": "Исходящие сообщения MAX",
 		"fields": {
-			"attempt_count": "attempt count",
+			"attempt_count": "Попытки",
 			"created_at": "Создано",
-			"error_str": "error str",
+			"error_str": "Ошибка",
 			"id": "ID",
-			"locked_at": "locked at",
+			"locked_at": "Заблокировано",
 			"max_user": "Пользователь MAX",
-			"max_user_id": "max user id",
-			"message": "message",
-			"metadata": "metadata",
-			"next_attempt_at": "next attempt at",
-			"sent_at": "sent at",
-			"status": "status"
+			"next_attempt_at": "Следующая попытка",
+			"sent_at": "Отправлено",
+			"status": "Статус"
 		},
 		"form": {
 			"create": "Исходящие сообщения MAX",
@@ -60,12 +55,9 @@
 		"fields": {
 			"app_username": "ФИО пользователя",
 			"customer": "Клиент",
-			"customer_id": "Клиент",
 			"customer_sale_place": "Точка продажи",
-			"customer_sale_place_id": "Точка продажи",
 			"is_active": "Активен",
-			"max_user_id": "Идентификатор MAX",
-			"username": "Имя пользователя MAX"
+			"max_user_id": "Идентификатор MAX"
 		},
 		"form": {
 			"create": "Новый пользователь MAX",

@@ -19,6 +19,7 @@ const NotificationTemplateList = () =>
 	import("@/views/notificationTemplate/NotificationTemplateList.vue");
 const NotificationTemplateEditPage = () =>
 	import("@/views/notificationTemplate/NotificationTemplateEditPage.vue");
+const OrderLineList = () => import("@/views/order/OrderLineList.vue");
 
 interface RouteManifestEntry {
 	route: RouteRecordRaw;
@@ -40,6 +41,19 @@ const defineRoute = (
 };
 
 const manualRouteManifest: RouteManifestEntry[] = [
+	defineRoute(
+		{
+			path: "/order-lines",
+			name: "orderLines",
+			component: OrderLineList,
+		},
+		{
+			descr: "Строки заказов",
+			section: "Документы",
+			icon: "pi pi-list",
+			menu_available: true,
+		},
+	),
 	defineRoute(
 		{
 			path: "/",

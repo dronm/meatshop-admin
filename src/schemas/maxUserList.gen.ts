@@ -14,8 +14,8 @@ export const createMaxUserListSchemas = (t: TranslateFn) => {
 
 	const MaxUserListDTOSchema = v.object({
 		id: IdSchema,
-		customer: AttrsSchema,
-		customer_sale_place: AttrsSchema,
+		customer: v.nullable(AttrsSchema),
+		customer_sale_place: v.nullable(AttrsSchema),
 		max_user_id: IdSchema,
 		username: v.nullable(TextSchema),
 		app_username: TextSchema,
@@ -26,8 +26,8 @@ export const createMaxUserListSchemas = (t: TranslateFn) => {
 
 	const MaxUserListSchema = v.object({
 		id: IdSchema,
-		customer: AttrsSchema,
-		customer_sale_place: AttrsSchema,
+		customer: v.nullable(AttrsSchema),
+		customer_sale_place: v.nullable(AttrsSchema),
 		max_user_id: IdSchema,
 		username: v.nullable(TextSchema),
 		app_username: TextSchema,

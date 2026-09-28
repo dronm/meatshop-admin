@@ -14,7 +14,7 @@ import type {
 type ListModel = MaxOutMessageList;
 type CreateModel = never;
 type UpdateModel = never;
-const formatDate = (value: unknown): string => value instanceof Date
+const formatDateTime = (value: unknown): string => value instanceof Date
 	? value.toLocaleString("ru-RU")
 	: "";
 const commands: GridCommand<ListModel, MaxOutMessageKey>[] = [
@@ -44,8 +44,8 @@ export const maxOutMessageCollection = defineCollection<
 			field: "created_at",
 			headerKey: "MaxOutMessage.fields.created_at",
 			sortable: true,
-			dataType: "date",
-			format: formatDate,
+			dataType: "datetime",
+			format: formatDateTime,
 			width: "14rem",
 		},
 		{
@@ -72,24 +72,24 @@ export const maxOutMessageCollection = defineCollection<
 			field: "next_attempt_at",
 			headerKey: "MaxOutMessage.fields.next_attempt_at",
 			sortable: true,
-			dataType: "date",
-			format: formatDate,
+			dataType: "datetime",
+			format: formatDateTime,
 			width: "14rem",
 		},
 		{
 			field: "locked_at",
 			headerKey: "MaxOutMessage.fields.locked_at",
 			sortable: true,
-			dataType: "date",
-			format: formatDate,
+			dataType: "datetime",
+			format: formatDateTime,
 			width: "14rem",
 		},
 		{
 			field: "sent_at",
 			headerKey: "MaxOutMessage.fields.sent_at",
 			sortable: true,
-			dataType: "date",
-			format: formatDate,
+			dataType: "datetime",
+			format: formatDateTime,
 			width: "14rem",
 		},
 		{

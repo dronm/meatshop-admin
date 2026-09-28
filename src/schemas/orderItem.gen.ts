@@ -20,6 +20,11 @@ export const createOrderItemSchemas = (t: TranslateFn) => {
 		measure_unit_id: IdSchema,
 		quant_required: NumberSchema,
 		quant: NumberSchema,
+		price: v.nullable(NumberSchema),
+		amount: v.nullable(NumberSchema),
+		vat_percent: v.nullable(NumberSchema),
+		vat_amount: v.nullable(NumberSchema),
+		use_marking: v.boolean(),
 	});
 
 	const OrderItemSchema = v.object({
@@ -30,6 +35,11 @@ export const createOrderItemSchemas = (t: TranslateFn) => {
 		measure_unit_id: IdSchema,
 		quant_required: NumberSchema,
 		quant: NumberSchema,
+		price: v.nullable(NumberSchema),
+		amount: v.nullable(NumberSchema),
+		vat_percent: v.nullable(NumberSchema),
+		vat_amount: v.nullable(NumberSchema),
+		use_marking: v.boolean(),
 	});
 
 	const OrderItemKeySchema = v.pick(

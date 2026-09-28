@@ -8,6 +8,11 @@ export interface OrderItemDTO {
 	measure_unit_id: number;
 	quant_required: number;
 	quant: number;
+	price: number | null;
+	amount: number | null;
+	vat_percent: number | null;
+	vat_amount: number | null;
+	use_marking: boolean;
 }
 
 export interface OrderItem {
@@ -18,6 +23,11 @@ export interface OrderItem {
 	measure_unit_id: number;
 	quant_required: number;
 	quant: number;
+	price: number | null;
+	amount: number | null;
+	vat_percent: number | null;
+	vat_amount: number | null;
+	use_marking: boolean;
 }
 
 export type OrderItemKey = Pick<

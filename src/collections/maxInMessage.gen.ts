@@ -14,7 +14,7 @@ import type {
 type ListModel = MaxInMessageList;
 type CreateModel = never;
 type UpdateModel = never;
-const formatDate = (value: unknown): string => value instanceof Date
+const formatDateTime = (value: unknown): string => value instanceof Date
 	? value.toLocaleString("ru-RU")
 	: "";
 const commands: GridCommand<ListModel, MaxInMessageKey>[] = [
@@ -44,8 +44,8 @@ export const maxInMessageCollection = defineCollection<
 			field: "created_at",
 			headerKey: "MaxInMessage.fields.created_at",
 			sortable: true,
-			dataType: "date",
-			format: formatDate,
+			dataType: "datetime",
+			format: formatDateTime,
 			width: "14rem",
 		},
 		{

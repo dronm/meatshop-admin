@@ -1,0 +1,14 @@
+
+> meatshop-admin@0.1.0 type-check
+> vue-tsc --build
+
+src/collections/maxInMessage.gen.ts(33,2): error TS2322: Type '{ serviceName: string | undefined; list: { (params?: CollectionParams): Promise<CollectionResponse<MaxInMessageList>>; (params: CollectionParams | undefined, format: ExportFormats): Promise<void>; }; detail: (key: MaxInMessageKey) => Promise<...>; create: (model: never) => Promise<...>; update: (key: MaxInMessageKey...' is not assignable to type 'CollectionGridApi<MaxInMessageList, MaxInMessageKey, never, UpdateModel, MaxInMessage>'.
+  Types of property 'update' are incompatible.
+    Type '(key: MaxInMessageKey, model: never) => Promise<CollectionAlterResult>' is not assignable to type '(key: MaxInMessageKey, model: UpdateModel) => Promise<unknown>'.
+      Types of parameters 'model' and 'model' are incompatible.
+        Type 'UpdateModel' is not assignable to type 'never'.
+src/collections/maxOutMessage.gen.ts(33,2): error TS2322: Type '{ serviceName: string | undefined; list: { (params?: CollectionParams): Promise<CollectionResponse<MaxOutMessageList>>; (params: CollectionParams | undefined, format: ExportFormats): Promise<void>; }; detail: (key: MaxOutMessageKey) => Promise<...>; create: (model: never) => Promise<...>; update: (key: MaxOutMessage...' is not assignable to type 'CollectionGridApi<MaxOutMessageList, MaxOutMessageKey, never, UpdateModel, MaxOutMessage>'.
+  Types of property 'update' are incompatible.
+    Type '(key: MaxOutMessageKey, model: never) => Promise<CollectionAlterResult>' is not assignable to type '(key: MaxOutMessageKey, model: UpdateModel) => Promise<unknown>'.
+      Types of parameters 'model' and 'model' are incompatible.
+        Type 'UpdateModel' is not assignable to type 'never'.

@@ -146,6 +146,23 @@
 			"number_1c": "Номер 1С"
 		}
 	},
+	"OrderLineList": {
+		"title": "Строки заказов",
+		"fields": {
+			"id": "Заказ №",
+			"line_num": "Строка",
+			"customer": "Заказчик",
+			"customer_sale_place": "Точка продаж",
+			"product": "Продукция",
+			"quant": "Количество",
+			"price": "Цена",
+			"amount": "Сумма",
+			"vat_amount": "НДС",
+			"use_marking": "Маркировка",
+			"ref_1c": "Заказ 1С",
+			"shipment_ref_1c": "Отгрузка 1С"
+		}
+	},
 	"Integration1CJob": {
 		"fields": {
 			"id": "ID",

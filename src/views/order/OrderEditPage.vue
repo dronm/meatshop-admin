@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { useRoute } from "vue-router";
 
 import Button from "primevue/button";
 import Tab from "primevue/tab";
@@ -36,6 +37,7 @@ import {
 } from "@/utils/orderPrintPopup";
 
 const { t } = useI18n();
+const route = useRoute();
 
 const routeID = (value: unknown): number => {
 	const id = Number(value ?? 0);
@@ -50,7 +52,12 @@ const edit = useDocumentEditPage<
 >({
 	api: orderDocumentApi,
 	createRouteName: "orderCreate",
-	listRoute: { name: "orders" },
+	listRoute: () => ({
+		name:
+			route.query.from === "orderLines"
+				? "orderLines"
+				: "orders",
+	}),
 	keyFromRoute: (route) => ({
 		id: routeID(route.params.id),
 	}),
@@ -75,9 +82,7 @@ const orderId = computed<number | null>(() => {
 const orderCorrelationPrefix = computed(() => {
 	const id = orderId.value;
 
-	return id === null
-		? ""
-		: `order:${id}:v`;
+	return id === null ? "" : `order:${id}:v`;
 });
 
 const integrationJobsKey = computed(() => {
@@ -107,9 +112,7 @@ const ref1C = computed(() => {
 		return null;
 	}
 
-	return value.id.length === 0 && value.descr.length === 0
-		? null
-		: value;
+	return value.id.length === 0 && value.descr.length === 0 ? null : value;
 });
 
 const printOrder = async (): Promise<void> => {
@@ -219,7 +222,9 @@ const submit = async (model: OrderFormModel): Promise<void> => {
 						:model="edit.model.value"
 						:mode="edit.mode.value"
 						:errors="edit.errors"
-						:submitting="edit.submitting.value"
+						:submitting="
+							edit.submitting.value
+						"
 						@submit="submit"
 						@cancel="edit.goBack"
 					/>
@@ -230,34 +235,66 @@ const submit = async (model: OrderFormModel): Promise<void> => {
 						v-if="orderId === null"
 						class="order-integration-placeholder"
 					>
-						{{ t("Order.integration1c.saveFirst") }}
+						{{
+							t(
+								"Order.integration1c.saveFirst",
+							)
+						}}
 					</div>
 
-					<div
-						v-else
-						class="space-y-4"
-					>
-						<div class="order-integration-reference">
-							<div class="order-integration-reference-title">
-								{{ t("Order.integration1c.reference") }}
+					<div v-else class="space-y-4">
+						<div
+							class="order-integration-reference"
+						>
+							<div
+								class="order-integration-reference-title"
+							>
+								{{
+									t(
+										"Order.integration1c.reference",
+									)
+								}}
 							</div>
 
 							<div
-								v-if="ref1C !== null"
+								v-if="
+									ref1C !==
+									null
+								"
 								class="order-integration-reference-grid"
 							>
-								<div class="order-integration-label">
-									{{ t("Order.integration1c.refDescr") }}
+								<div
+									class="order-integration-label"
+								>
+									{{
+										t(
+											"Order.integration1c.refDescr",
+										)
+									}}
 								</div>
 								<div>
-									{{ ref1C.descr || "—" }}
+									{{
+										ref1C.descr ||
+										"—"
+									}}
 								</div>
 
-								<div class="order-integration-label">
-									{{ t("Order.integration1c.refId") }}
+								<div
+									class="order-integration-label"
+								>
+									{{
+										t(
+											"Order.integration1c.refId",
+										)
+									}}
 								</div>
-								<div class="break-all font-mono text-sm">
-									{{ ref1C.id || "—" }}
+								<div
+									class="break-all font-mono text-sm"
+								>
+									{{
+										ref1C.id ||
+										"—"
+									}}
 								</div>
 							</div>
 
@@ -265,18 +302,32 @@ const submit = async (model: OrderFormModel): Promise<void> => {
 								v-else
 								class="text-sm text-surface-500"
 							>
-								{{ t("Order.integration1c.noReference") }}
+								{{
+									t(
+										"Order.integration1c.noReference",
+									)
+								}}
 							</div>
 						</div>
 
 						<div>
-							<div class="order-integration-jobs-title">
-								{{ t("Order.integration1c.jobs") }}
+							<div
+								class="order-integration-jobs-title"
+							>
+								{{
+									t(
+										"Order.integration1c.jobs",
+									)
+								}}
 							</div>
 
 							<Integration1CJobGrid
-								:key="integrationJobsKey"
-								:correlationPrefix="orderCorrelationPrefix"
+								:key="
+									integrationJobsKey
+								"
+								:correlationPrefix="
+									orderCorrelationPrefix
+								"
 							/>
 						</div>
 					</div>
