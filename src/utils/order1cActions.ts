@@ -28,3 +28,21 @@ export const createOrderShipments = async (
 		);
 	}
 };
+
+export const createOrdersIn1C = async (
+	orderIDs: readonly number[],
+): Promise<void> => {
+	try {
+		const result = await orderDocumentApi.createOrders1c(orderIDs);
+		window.alert(
+			translate("Order.feedback.createOrderAccepted", {
+				jobId: result.job_id,
+				status: translate(`Integration1CJob.status.${result.status}`),
+			}),
+		);
+	} catch (error: unknown) {
+		window.alert(
+			`${translate("Order.feedback.createOrderFailed")}\n${errorText(error)}`,
+		);
+	}
+};

@@ -93,6 +93,14 @@ export const orderDocumentApi = {
 			orderIDsRequest(orderIDs),
 		);
 	},
+	createOrders1c: async (
+		orderIDs: readonly number[],
+	): Promise<Order1CJobResponse> => {
+		return await api.post<Order1CJobResponse>(
+			`${basePath}/create-orders-1c`,
+			orderIDsRequest(orderIDs),
+		);
+	},
 	printShipments1c: async (
 		orderIDs: readonly number[],
 	): Promise<Blob> => {

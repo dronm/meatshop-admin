@@ -2,7 +2,7 @@ import { type GridCommand } from "@katren/vue-collection-lib";
 
 import { i18n } from "@/i18n";
 import type { OrderKey } from "@/types/orderDocument";
-import { createOrderShipments } from "@/utils/order1cActions";
+import { createOrdersIn1C, createOrderShipments } from "@/utils/order1cActions";
 import {
 	hasOrder1CReference,
 	openOrderPrintPopup,
@@ -52,6 +52,18 @@ export const createOrderCommands = <TRow extends OrderCommandRow>(
 		{ name: "create" },
 		{ name: "edit" },
 		{ name: "copy" },
+		{
+			name: "createOrders1c",
+			labelKey: "Order.actions.createOrder",
+			icon: "pi pi-send",
+			enabled: (row) => row !== null,
+			handler: async ({ rows }): Promise<void> => {
+				const orderIDs = [...new Set(rows.map((row) => row.id))];
+				if (orderIDs.length > 0) {
+					await createOrdersIn1C(orderIDs);
+				}
+			},
+		},
 		{
 			name: "printOrder1c",
 			labelKey: "Order.actions.printOrder",

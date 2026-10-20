@@ -134,11 +134,14 @@
 			}
 		},
 		"actions": {
+			"createOrder": "Создать заказ",
 			"printOrder": "Печать заказа",
 			"createShipment": "Создать отгрузку",
 			"printShipment": "Печать отгрузки"
 		},
 		"feedback": {
+			"createOrderAccepted": "Задание №{jobId} на создание заказов в 1С принято. Статус: {status}.",
+			"createOrderFailed": "Не удалось поставить создание заказов в 1С в очередь.",
 			"missing1cReferences": "Не заданы ссылки на документы 1С для заказов: {ids}.",
 			"createShipmentAccepted": "Задание №{jobId} на создание отгрузок принято. Статус: {status}.",
 			"createShipmentFailed": "Не удалось поставить создание отгрузок в очередь."
