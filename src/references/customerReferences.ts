@@ -96,7 +96,7 @@ export const customerReference = defineCrudReference<
 });
 
 export const createCustomerSalePlaceReference = (
-	customerId: number | null,
+	customerId?: number | null,
 ) => {
 	return defineCrudReference<
 		CustomerSalePlaceList,
@@ -105,7 +105,9 @@ export const createCustomerSalePlaceReference = (
 	>({
 		list: async (params?: CollectionParams) => {
 			return await customerSalePlaceApi.list(
-				withCustomerFilter(params, customerId),
+				customerId === undefined
+					? params
+					: withCustomerFilter(params, customerId),
 			);
 		},
 		detail: async (key) => {

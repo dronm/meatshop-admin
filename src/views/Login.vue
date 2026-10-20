@@ -28,7 +28,7 @@ const handleLogin = async (): Promise<void> => {
 		await authStore.login(cred);
 
 		await router.push({
-			name: authStore.user?.role_id === "admin" ? "users" : "userProfile",
+			name: "orderLines",
 		});
 	} catch (error: unknown) {
 		errorMessage.value = errorText(error);

@@ -6,9 +6,19 @@ import {
 
 import { orderLineListApi } from "@/api/orderLineList";
 import { createOrderCommands } from "@/collections/orderCommands";
+import {
+	createCustomerSalePlaceReference,
+	customerReference,
+} from "@/references/customerReferences";
+import { productReference } from "@/references/productReferences";
 import type { OrderKey } from "@/types/orderDocument";
 import type { OrderLineListRow } from "@/types/orderLineList";
 import { formatReference } from "@/utils/reference";
+
+const customerSalePlaceReference = createCustomerSalePlaceReference();
+
+const formatOrderDate = (value: unknown): string =>
+	value instanceof Date ? value.toLocaleDateString("ru-RU") : "";
 
 const formatDecimal = (fractionDigits: number) => {
 	const formatter = new Intl.NumberFormat("ru-RU", {
@@ -39,37 +49,44 @@ const baseColumns: GridColumn<OrderLineListRow>[] = [
 		width: "6rem",
 	},
 	{
-		field: "line_num",
-		headerKey: "OrderLineList.fields.line_num",
+		field: "for_date",
+		headerKey: "OrderLineList.fields.for_date",
 		sortable: true,
-		dataType: "number",
-		align: "right",
-		width: "5rem",
+		dataType: "date",
+		format: formatOrderDate,
+		width: "9rem",
 	},
 	{
 		field: "customer",
 		headerKey: "OrderLineList.fields.customer",
-		searchable: false,
+		searchDataType: "reference",
+		reference: customerReference,
+		searchField: "customer->'keys'->>'id'",
 		format: formatReference,
 		width: "12rem",
 	},
 	{
 		field: "customer_sale_place",
 		headerKey: "OrderLineList.fields.customer_sale_place",
-		searchable: false,
+		searchDataType: "reference",
+		reference: customerSalePlaceReference,
+		searchField: "customer_sale_place->'keys'->>'id'",
 		format: formatReference,
 		width: "12rem",
 	},
 	{
 		field: "product",
 		headerKey: "OrderLineList.fields.product",
-		searchable: false,
+		searchDataType: "reference",
+		reference: productReference,
+		searchField: "product->'keys'->>'id'",
 		format: formatReference,
 		width: "16rem",
 	},
 	{
 		field: "quant",
 		headerKey: "OrderLineList.fields.quant",
+		searchable: false,
 		sortable: true,
 		dataType: "number",
 		align: "right",
@@ -79,6 +96,7 @@ const baseColumns: GridColumn<OrderLineListRow>[] = [
 	{
 		field: "price",
 		headerKey: "OrderLineList.fields.price",
+		searchable: false,
 		sortable: true,
 		dataType: "number",
 		align: "right",
@@ -88,6 +106,7 @@ const baseColumns: GridColumn<OrderLineListRow>[] = [
 	{
 		field: "amount",
 		headerKey: "OrderLineList.fields.amount",
+		searchable: false,
 		sortable: true,
 		dataType: "number",
 		align: "right",
@@ -97,6 +116,7 @@ const baseColumns: GridColumn<OrderLineListRow>[] = [
 	{
 		field: "vat_amount",
 		headerKey: "OrderLineList.fields.vat_amount",
+		searchable: false,
 		sortable: true,
 		dataType: "number",
 		align: "right",
@@ -106,6 +126,7 @@ const baseColumns: GridColumn<OrderLineListRow>[] = [
 	{
 		field: "use_marking",
 		headerKey: "OrderLineList.fields.use_marking",
+		searchable: false,
 		sortable: true,
 		dataType: "boolean",
 		width: "7rem",
@@ -113,14 +134,14 @@ const baseColumns: GridColumn<OrderLineListRow>[] = [
 	{
 		field: "ref_1c",
 		headerKey: "OrderLineList.fields.ref_1c",
-		searchable: false,
+		searchField: "ref_1c->>'descr'",
 		format: format1CReference,
 		width: "10rem",
 	},
 	{
 		field: "shipment_ref_1c",
 		headerKey: "OrderLineList.fields.shipment_ref_1c",
-		searchable: false,
+		searchField: "shipment_ref_1c->>'descr'",
 		format: format1CReference,
 		width: "10rem",
 	},

@@ -10,7 +10,7 @@ const router = useRouter();
 onMounted(async (): Promise<void> => {
 	if (authStore.isAuthenticated()) {
 		await router.replace({
-			name: "orders",
+			name: "orderLines",
 		});
 	}
 });

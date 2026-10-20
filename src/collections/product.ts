@@ -1,12 +1,38 @@
 import type {
+	CollectionParams,
+	CollectionResponse,
+	GridColumn,
 	GridCreateContext,
 	GridHierarchyConfig,
 } from "@katren/vue-collection-lib";
 
+import { productApi } from "@/api/product.gen";
 import { productCollection as generatedProductCollection } from "@/collections/product.gen";
 import type { ProductList } from "@/types/productList.gen";
+import { normalizeRef1C } from "@/utils/ref1c";
 
-const productHierarchy: GridHierarchyConfig<ProductList> = {
+type ProductListRow = ProductList & {
+	ref_1c_exists?: boolean;
+};
+
+const productListApi = {
+	...productApi,
+	list: async (
+		params?: CollectionParams,
+	): Promise<CollectionResponse<ProductListRow>> => {
+		const collection = await productApi.list(params);
+
+		return {
+			...collection,
+			rows: collection.rows.map((row) => ({
+				...row,
+				ref_1c_exists: normalizeRef1C(row.ref_1c) !== null,
+			})),
+		};
+	},
+};
+
+const productHierarchy: GridHierarchyConfig<ProductListRow> = {
 	parentField: "parent_id",
 	groupField: "is_group",
 	idField: "id",
@@ -28,16 +54,27 @@ const formatReference = (value: unknown): string => {
 	return typeof descr === "string" ? descr : "";
 };
 
-const productColumns = generatedProductCollection.columns.map((column) => {
-	if (column.field !== "measure_unit") {
-		return column;
-	}
+const productColumns: GridColumn<ProductListRow>[] = [
+	...generatedProductCollection.columns.map((column) => {
+		if (column.field !== "measure_unit") {
+			return column;
+		}
 
-	return {
-		...column,
-		format: formatReference,
-	};
-});
+		return {
+			...column,
+			format: formatReference,
+		};
+	}),
+	{
+		field: "ref_1c_exists",
+		headerKey: "Product.fields.ref_1c_exists",
+		sortable: false,
+		searchable: false,
+		dataType: "boolean",
+		align: "center",
+		width: "5rem",
+	},
+];
 
 const createRoute = (context: GridCreateContext) => {
 	const parentID = context.initialValues?.parent_id;
@@ -56,6 +93,7 @@ const createRoute = (context: GridCreateContext) => {
 
 export const productCollection = {
 	...generatedProductCollection,
+	api: productListApi,
 	columns: productColumns,
 	hierarchy: productHierarchy,
 	routes: {

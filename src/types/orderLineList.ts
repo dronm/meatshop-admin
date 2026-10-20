@@ -4,6 +4,7 @@ import type { Ref1C } from "@/types/ref1c";
 // The id belongs to the order; item_id uniquely identifies the displayed line.
 export interface OrderLineList {
 	id: number;
+	for_date: Date;
 	shipment_ref_1c: Ref1C | null;
 	customer: IDReference | null;
 	customer_sale_place: IDReference | null;

@@ -98,6 +98,9 @@
 		}
 	},
 	"Product": {
+		"fields": {
+			"ref_1c_exists": "1С"
+		},
 		"hierarchy": {
 			"root": "Продукция",
 			"createItem": "Новая продукция",
@@ -150,7 +153,7 @@
 		"title": "Строки заказов",
 		"fields": {
 			"id": "Заказ №",
-			"line_num": "Строка",
+			"for_date": "Дата заказа",
 			"customer": "Заказчик",
 			"customer_sale_place": "Точка продаж",
 			"product": "Продукция",

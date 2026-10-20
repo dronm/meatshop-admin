@@ -1,6 +1,11 @@
 import * as v from "valibot";
 
-import { IdSchema, NumberSchema, TextSchema } from "@/schemas/common";
+import {
+	DateStringSchema,
+	IdSchema,
+	NumberSchema,
+	TextSchema,
+} from "@/schemas/common";
 import type { OrderLineList } from "@/types/orderLineList";
 
 const referenceSchema = v.object({
@@ -15,6 +20,7 @@ const ref1CSchema = v.object({
 
 const orderLineListSchema = v.object({
 	id: IdSchema,
+	for_date: DateStringSchema,
 	shipment_ref_1c: v.nullable(ref1CSchema),
 	customer: v.nullable(referenceSchema),
 	customer_sale_place: v.nullable(referenceSchema),
@@ -30,5 +36,10 @@ const orderLineListSchema = v.object({
 });
 
 export const orderLineListFromDTO = (dto: unknown): OrderLineList => {
-	return v.parse(orderLineListSchema, dto);
+	const parsed = v.parse(orderLineListSchema, dto);
+
+	return {
+		...parsed,
+		for_date: new Date(parsed.for_date),
+	};
 };

@@ -8,7 +8,6 @@ import {
 	type CollectionParams,
 } from "@katren/vue-collection-lib";
 
-import { productApi } from "@/api/product.gen";
 import { productCollection } from "@/collections/product";
 
 const route = useRoute();
@@ -38,9 +37,9 @@ const withGroupFilter = (
 };
 
 const productGroupApi = {
-	...productApi,
+	...productCollection.api,
 	list: async (params?: CollectionParams) => {
-		return await productApi.list(withGroupFilter(params));
+		return await productCollection.api.list(withGroupFilter(params));
 	},
 };
 
