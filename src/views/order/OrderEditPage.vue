@@ -29,7 +29,7 @@ import type {
 	OrderFormModel,
 	OrderKey,
 } from "@/types/orderDocument";
-import { createOrderShipments } from "@/utils/order1cActions";
+import { createOrdersIn1C, createOrderShipments } from "@/utils/order1cActions";
 import {
 	hasOrder1CReference,
 	openOrderPrintPopup,
@@ -90,6 +90,7 @@ const integrationJobsKey = computed(() => {
 });
 
 const printingOrder = ref(false);
+const creatingOrder = ref(false);
 const creatingShipment = ref(false);
 const printingShipment = ref(false);
 const canRun1CActions = computed(() => {
@@ -100,6 +101,7 @@ const canRun1CActions = computed(() => {
 });
 const running1CAction = computed(() => {
 	return (
+		creatingOrder.value ||
 		printingOrder.value ||
 		creatingShipment.value ||
 		printingShipment.value
@@ -126,6 +128,20 @@ const printOrder = async (): Promise<void> => {
 		await openOrderPrintPopup([id]);
 	} finally {
 		printingOrder.value = false;
+	}
+};
+
+const createOrder = async (): Promise<void> => {
+	const id = orderId.value;
+	if (id === null || edit.loading.value || edit.submitting.value || running1CAction.value) {
+		return;
+	}
+
+	creatingOrder.value = true;
+	try {
+		await createOrdersIn1C([id]);
+	} finally {
+		creatingOrder.value = false;
 	}
 };
 
@@ -173,6 +189,15 @@ const submit = async (model: OrderFormModel): Promise<void> => {
 			v-if="orderId !== null"
 			class="mb-3 flex flex-wrap justify-end gap-2"
 		>
+			<Button
+				:label="t('Order.actions.createOrder')"
+				icon="pi pi-send"
+				severity="secondary"
+				outlined
+				:disabled="edit.loading.value || edit.submitting.value || running1CAction"
+				:loading="creatingOrder"
+				@click="createOrder"
+			/>
 			<Button
 				:label="t('Order.actions.printOrder')"
 				icon="pi pi-print"

@@ -134,9 +134,9 @@
 			}
 		},
 		"actions": {
-			"createOrder": "Создать заказ",
+			"createOrder": "Создать счет 1с",
 			"printOrder": "Печать заказа",
-			"createShipment": "Создать отгрузку",
+			"createShipment": "Создать отгрузку 1с",
 			"printShipment": "Печать отгрузки"
 		},
 		"feedback": {

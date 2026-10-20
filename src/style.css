@@ -584,27 +584,27 @@ table .p-button.p-button-icon-only {
 	line-height: 1rem;
 }
 
-/* Order collection status backgrounds. Keep them subtle so selected-cell and text states remain readable. */
-.p-datatable-tbody > tr > td.order-status-new {
+/* Apply status colors only to unmarked rows so the grid selection stays visible. */
+.p-datatable-tbody > tr:not(.crud-grid-row-marked):not(.crud-grid-row-current):not(.p-datatable-row-selected) > td.order-status-new {
 	background: rgb(239 246 255) !important;
 }
 
-.p-datatable-tbody > tr > td.order-status-accepted {
+.p-datatable-tbody > tr:not(.crud-grid-row-marked):not(.crud-grid-row-current):not(.p-datatable-row-selected) > td.order-status-accepted {
 	background: rgb(236 254 255) !important;
 }
 
-.p-datatable-tbody > tr > td.order-status-processing {
+.p-datatable-tbody > tr:not(.crud-grid-row-marked):not(.crud-grid-row-current):not(.p-datatable-row-selected) > td.order-status-processing {
 	background: rgb(255 251 235) !important;
 }
 
-.p-datatable-tbody > tr > td.order-status-approved {
+.p-datatable-tbody > tr:not(.crud-grid-row-marked):not(.crud-grid-row-current):not(.p-datatable-row-selected) > td.order-status-approved {
 	background: rgb(245 243 255) !important;
 }
 
-.p-datatable-tbody > tr > td.order-status-completed {
+.p-datatable-tbody > tr:not(.crud-grid-row-marked):not(.crud-grid-row-current):not(.p-datatable-row-selected) > td.order-status-completed {
 	background: rgb(240 253 244) !important;
 }
 
-.p-datatable-tbody > tr > td.order-status-cancelled {
+.p-datatable-tbody > tr:not(.crud-grid-row-marked):not(.crud-grid-row-current):not(.p-datatable-row-selected) > td.order-status-cancelled {
 	background: rgb(254 242 242) !important;
 }
