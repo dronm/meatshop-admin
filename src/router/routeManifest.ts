@@ -43,6 +43,20 @@ const defineRoute = (
 const manualRouteManifest: RouteManifestEntry[] = [
 	defineRoute(
 		{
+			path: "/integration-1c/admin",
+			name: "integration1cAdmin",
+			component: () => import("@/views/integration1c/Integration1CAdmin.vue"),
+			meta: { roleId: "admin" },
+		},
+		{
+			descr: "Управление интеграцией 1С",
+			section: "Администрирование",
+			icon: "pi pi-server",
+			menu_available: true,
+		},
+	),
+	defineRoute(
+		{
 			path: "/order-lines",
 			name: "orderLines",
 			component: OrderLineList,
