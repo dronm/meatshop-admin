@@ -13,11 +13,9 @@ import type {
 	OrderDocument,
 	Order1CJobResponse,
 	OrderKey,
+	OrderStatusChangeResponse,
 } from "@/types/orderDocument";
-import type {
-	OrderList,
-	OrderListDTO,
-} from "@/types/orderList.gen";
+import type { OrderList, OrderListDTO } from "@/types/orderList.gen";
 
 const ORDER_PRINT_TIMEOUT = 60_000;
 const basePath = "/order";
@@ -74,10 +72,25 @@ export const orderDocumentApi = {
 		key: OrderKey,
 		document: OrderDocument,
 	): Promise<OrderDetail> => {
-		const dto = await api.put<unknown>(`${basePath}/${key.id}`, document);
+		const dto = await api.put<unknown>(
+			`${basePath}/${key.id}`,
+			document,
+		);
 		return orderDetailFromDTO(dto);
 	},
 	delete: remove,
+	changeStatus: async (
+		orderIDs: readonly number[],
+		statusID: number,
+	): Promise<OrderStatusChangeResponse> => {
+		return await api.post<OrderStatusChangeResponse>(
+			`${basePath}/change-status`,
+			{
+				...orderIDsRequest(orderIDs),
+				status_id: statusID,
+			},
+		);
+	},
 	printOrders1c: async (orderIDs: readonly number[]): Promise<Blob> => {
 		return await api.postAttachment(
 			`${basePath}/print-1c`,

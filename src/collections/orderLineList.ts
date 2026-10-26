@@ -14,6 +14,7 @@ import { productReference } from "@/references/productReferences";
 import type { OrderKey } from "@/types/orderDocument";
 import type { OrderLineListRow } from "@/types/orderLineList";
 import { formatReference } from "@/utils/reference";
+import { orderStatusClass } from "@/utils/orderStatus";
 
 const customerSalePlaceReference = createCustomerSalePlaceReference();
 
@@ -55,6 +56,13 @@ const baseColumns: GridColumn<OrderLineListRow>[] = [
 		dataType: "date",
 		format: formatOrderDate,
 		width: "9rem",
+	},
+	{
+		field: "status",
+		headerKey: "OrderLineList.fields.status",
+		searchField: "status->>'descr'",
+		format: formatReference,
+		width: "8rem",
 	},
 	{
 		field: "customer",
@@ -150,7 +158,12 @@ const baseColumns: GridColumn<OrderLineListRow>[] = [
 const columns: GridColumn<OrderLineListRow>[] = baseColumns.map((column) => ({
 	...column,
 	bodyClass: (row: OrderLineListRow): string =>
-		row.group_start ? "order-line-group-start" : "",
+		[
+			orderStatusClass(row),
+			row.group_start ? "order-line-group-start" : "",
+		]
+			.filter(Boolean)
+			.join(" "),
 }));
 
 export const orderLineCollection = defineCollection<OrderLineListRow, OrderKey>(

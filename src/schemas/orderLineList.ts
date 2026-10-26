@@ -21,6 +21,7 @@ const ref1CSchema = v.object({
 const orderLineListSchema = v.object({
 	id: IdSchema,
 	for_date: DateStringSchema,
+	status: v.nullable(referenceSchema),
 	shipment_ref_1c: v.nullable(ref1CSchema),
 	customer: v.nullable(referenceSchema),
 	customer_sale_place: v.nullable(referenceSchema),

@@ -76,3 +76,7 @@ export interface Order1CJobResponse {
 	job_id: number;
 	status: Integration1CJobStatus;
 }
+
+export interface OrderStatusChangeResponse {
+	rows_affected: number;
+}

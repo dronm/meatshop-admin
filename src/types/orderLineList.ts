@@ -5,6 +5,7 @@ import type { Ref1C } from "@/types/ref1c";
 export interface OrderLineList {
 	id: number;
 	for_date: Date;
+	status: IDReference | null;
 	shipment_ref_1c: Ref1C | null;
 	customer: IDReference | null;
 	customer_sale_place: IDReference | null;

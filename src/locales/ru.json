@@ -134,10 +134,18 @@
 			}
 		},
 		"actions": {
+			"changeStatus": "Изменить статус",
 			"createOrder": "Создать счет 1с",
 			"printOrder": "Печать заказа",
 			"createShipment": "Создать отгрузку 1с",
 			"printShipment": "Печать отгрузки"
+		},
+		"batchStatus": {
+			"selected": "Выбрано заказов: {count}",
+			"wholeOrders": "Новый статус применяется ко всему заказу, даже если выбраны только отдельные строки.",
+			"newStatus": "Новый статус",
+			"apply": "Применить",
+			"refreshFailed": "Статусы сохранены, но не удалось обновить список. Нажмите «Обновить»."
 		},
 		"feedback": {
 			"createOrderAccepted": "Задание №{jobId} на создание заказов в 1С принято. Статус: {status}.",
@@ -157,6 +165,7 @@
 		"fields": {
 			"id": "Заказ №",
 			"for_date": "Дата заказа",
+			"status": "Статус",
 			"customer": "Заказчик",
 			"customer_sale_place": "Точка продаж",
 			"product": "Продукция",

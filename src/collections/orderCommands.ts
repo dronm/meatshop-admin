@@ -14,6 +14,11 @@ interface OrderCommandRow {
 	ref_1c: unknown;
 }
 
+export type OrderStatusChangeHandler = (
+	orderIDs: readonly number[],
+	reload: () => Promise<void>,
+) => void;
+
 const commandOrderIDs = (rows: readonly OrderCommandRow[]): number[] | null => {
 	if (rows.length === 0) {
 		return null;
@@ -47,6 +52,7 @@ const commandOrderIDs = (rows: readonly OrderCommandRow[]): number[] | null => {
 
 export const createOrderCommands = <TRow extends OrderCommandRow>(
 	includeDelete = false,
+	changeStatus?: OrderStatusChangeHandler,
 ): GridCommand<TRow, OrderKey>[] => {
 	const commands: GridCommand<TRow, OrderKey>[] = [
 		{ name: "create" },
@@ -58,7 +64,9 @@ export const createOrderCommands = <TRow extends OrderCommandRow>(
 			icon: "pi pi-send",
 			enabled: (row) => row !== null,
 			handler: async ({ rows }): Promise<void> => {
-				const orderIDs = [...new Set(rows.map((row) => row.id))];
+				const orderIDs = [
+					...new Set(rows.map((row) => row.id)),
+				];
 				if (orderIDs.length > 0) {
 					await createOrdersIn1C(orderIDs);
 				}
@@ -101,6 +109,23 @@ export const createOrderCommands = <TRow extends OrderCommandRow>(
 			},
 		},
 	];
+
+	if (changeStatus !== undefined) {
+		commands.splice(3, 0, {
+			name: "changeStatus",
+			labelKey: "Order.actions.changeStatus",
+			icon: "pi pi-sync",
+			enabled: (row) => row !== null,
+			handler: ({ rows, reload }): void => {
+				const orderIDs = [
+					...new Set(rows.map((row) => row.id)),
+				];
+				if (orderIDs.length > 0) {
+					changeStatus(orderIDs, reload);
+				}
+			},
+		});
+	}
 
 	if (includeDelete) {
 		commands.push({ name: "delete" });
