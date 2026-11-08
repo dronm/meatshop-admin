@@ -18,6 +18,29 @@ const referenceID = (value: unknown): number | null => {
 		: null;
 };
 
+export const nextOrderStatusID = (
+	rows: readonly { status: unknown }[],
+): number | null => {
+	const statuses = new Set(rows.map((row) => referenceID(row.status)));
+	if (statuses.size !== 1) {
+		return null;
+	}
+
+	// Workflow order differs from the existing numeric status IDs.
+	switch (statuses.values().next().value) {
+		case 1:
+			return 3;
+		case 3:
+			return 2;
+		case 2:
+			return 4;
+		case 4:
+			return 5;
+		default:
+			return null;
+	}
+};
+
 export const orderStatusClass = (row: { status: unknown }): string => {
 	switch (referenceID(row.status)) {
 		case 1:

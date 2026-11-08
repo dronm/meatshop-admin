@@ -12,6 +12,7 @@ import OrderStatusReferenceInput from "@/components/references/OrderStatusRefere
 const props = defineProps<{
 	visible: boolean;
 	orderIDs: readonly number[];
+	initialStatusID?: number | null;
 }>();
 
 const emit = defineEmits<{
@@ -20,7 +21,7 @@ const emit = defineEmits<{
 }>();
 
 const { t } = useI18n();
-const statusID = ref<number | null>(null);
+const statusID = ref<number | null>(props.initialStatusID ?? null);
 const saving = ref(false);
 const error = ref("");
 const orderCount = computed(() => new Set(props.orderIDs).size);
@@ -55,7 +56,7 @@ watch(
 	() => props.visible,
 	(visible) => {
 		if (visible) {
-			statusID.value = null;
+			statusID.value = props.initialStatusID ?? null;
 			error.value = "";
 		}
 	},

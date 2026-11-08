@@ -17,9 +17,16 @@ export interface OrderDocumentItem {
 	measure_unit_id: number;
 	quant_required: number;
 	quant: number;
+	weight_confirmed: boolean;
+}
+
+export interface OrderFormItem extends OrderDocumentItem {
+	requires_weight_confirmation: boolean | null;
+	weight_confirmation_requested: boolean;
 }
 
 export interface OrderDetailItem extends OrderDocumentItem {
+	requires_weight_confirmation: boolean;
 	product: IDReference | null;
 	measure_unit: IDReference | null;
 }
@@ -69,7 +76,7 @@ export interface OrderFormModel {
 	status: IDReference | null;
 	comment_customer: string | null;
 	comment_admin: string | null;
-	items: OrderDocumentItem[];
+	items: OrderFormItem[];
 }
 
 export interface Order1CJobResponse {

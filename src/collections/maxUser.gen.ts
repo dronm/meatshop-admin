@@ -19,6 +19,7 @@ const commands: GridCommand<ListModel, MaxUserKey>[] = [
 	{ name: "delete" },
 	{ name: "search" },
 	{ name: "refresh" },
+	{ name: "resetColumnWidths" },
 ];
 
 export const maxUserCollection = defineCollection<
@@ -30,6 +31,9 @@ export const maxUserCollection = defineCollection<
 >({
 	titleKey: "MaxUser.title",
 	api: maxUserApi,
+	stickyHeader: true,
+	resizableColumns: true,
+	columnResizeMode: "expand",
 	columns: [
 		{
 			field: "app_username",

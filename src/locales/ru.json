@@ -122,15 +122,18 @@
 		},
 		"items": {
 			"title": "Товары",
+			"weightPending": "Требуется проверить вес",
 			"fields": {
 				"line_num": "№",
 				"product_id": "Продукция",
 				"measure_unit_id": "Ед. изм.",
 				"quant_required": "Количество заказано",
-				"quant": "Количество"
+				"quant": "Количество",
+				"weight_confirmed": "Без изменений"
 			},
 			"errors": {
-				"required": "Добавьте хотя бы одну позицию заказа"
+				"required": "Добавьте хотя бы одну позицию заказа",
+				"productDetails": "Не удалось загрузить данные продукции. Выберите продукцию повторно или повторите сохранение позиции."
 			}
 		},
 		"actions": {
@@ -162,20 +165,30 @@
 	},
 	"OrderLineList": {
 		"title": "Строки заказов",
+		"actions": {
+			"remove": "Удалить позицию"
+		},
+		"feedback": {
+			"confirmRemove": "Удалить позиции ({count})?",
+			"removeFailed": "Не удалось удалить позиции заказа.",
+			"refreshFailed": "Позиции удалены, но не удалось обновить список. Нажмите «Обновить»."
+		},
 		"fields": {
-			"id": "Заказ №",
-			"for_date": "Дата заказа",
+			"id": "№",
+			"for_date": "Дата",
 			"status": "Статус",
 			"customer": "Заказчик",
 			"customer_sale_place": "Точка продаж",
 			"product": "Продукция",
-			"quant": "Количество",
+			"quant": "Кол-во",
 			"price": "Цена",
 			"amount": "Сумма",
 			"vat_amount": "НДС",
-			"use_marking": "Маркировка",
+			"use_marking": "Марк.",
 			"ref_1c": "Заказ 1С",
-			"shipment_ref_1c": "Отгрузка 1С"
+			"shipment_ref_1c": "Отгрузка 1С",
+			"comment_customer": "Коммент.клиента",
+			"comment_admin": "Примечание"
 		}
 	},
 	"Integration1CJob": {

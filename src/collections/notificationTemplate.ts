@@ -4,6 +4,7 @@ import {
 } from "@katren/vue-collection-lib";
 
 import { notificationTemplateApi } from "@/api/notificationTemplate";
+import { collectionGridOptions } from "@/config/collectionGrid";
 import type {
 	NotificationTemplate,
 	NotificationTemplateKey,
@@ -26,6 +27,7 @@ export const notificationTemplateCollection = defineCollection<
 	NotificationTemplateUpd,
 	NotificationTemplate
 >({
+	...collectionGridOptions,
 	titleKey: "NotificationTemplate.title",
 	api: notificationTemplateApi,
 	columns: [

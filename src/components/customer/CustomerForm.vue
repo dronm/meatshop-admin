@@ -53,6 +53,7 @@ const submit = (): void => {
 		ref_1c: normalizeRef1C(form.value.ref_1c),
 		is_active: form.value.is_active ?? false,
 		allow_holiday_orders: form.value.allow_holiday_orders === true,
+		use_marking: form.value.use_marking === true,
 	};
 	emit("submit", model);
 };
@@ -116,6 +117,21 @@ const submit = (): void => {
 							form.allow_holiday_orders
 						"
 						inputId="customerAllowHolidayOrders"
+						:invalid="invalid"
+						binary
+					/>
+				</FormField>
+
+				<FormField
+					field="use_marking"
+					forId="customerUseMarking"
+					:label="t('Customer.fields.use_marking')"
+					:errors="props.errors"
+					v-slot="{ invalid }"
+				>
+					<Checkbox
+						v-model="form.use_marking"
+						inputId="customerUseMarking"
 						:invalid="invalid"
 						binary
 					/>

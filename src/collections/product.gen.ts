@@ -23,6 +23,7 @@ const commands: GridCommand<ListModel, ProductKey>[] = [
 	{ name: "delete" },
 	{ name: "search" },
 	{ name: "refresh" },
+	{ name: "resetColumnWidths" },
 ];
 
 export const productCollection = defineCollection<
@@ -34,6 +35,9 @@ export const productCollection = defineCollection<
 >({
 	titleKey: "Product.title",
 	api: productApi,
+	stickyHeader: true,
+	resizableColumns: true,
+	columnResizeMode: "expand",
 	columns: [
 		{
 			field: "id",

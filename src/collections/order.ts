@@ -6,6 +6,7 @@ import {
 
 import { orderListApi } from "@/api/orderDocument";
 import { createOrderCommands } from "@/collections/orderCommands";
+import { collectionGridOptions } from "@/config/collectionGrid";
 import type { OrderKey } from "@/types/orderDocument";
 import type { OrderList } from "@/types/orderList.gen";
 import { orderStatusClass } from "@/utils/orderStatus";
@@ -94,6 +95,7 @@ const columns: GridColumn<OrderList>[] = [
 ];
 
 export const orderCollection = defineCollection<OrderList, OrderKey>({
+	...collectionGridOptions,
 	titleKey: "Order.title",
 	api: orderListApi,
 	columns,

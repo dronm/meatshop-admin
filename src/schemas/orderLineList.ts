@@ -27,6 +27,8 @@ const orderLineListSchema = v.object({
 	customer_sale_place: v.nullable(referenceSchema),
 	product: v.nullable(referenceSchema),
 	quant: NumberSchema,
+	requires_weight_confirmation: v.boolean(),
+	weight_confirmed: v.boolean(),
 	price: v.nullable(NumberSchema),
 	amount: v.nullable(NumberSchema),
 	vat_amount: v.nullable(NumberSchema),
@@ -34,6 +36,8 @@ const orderLineListSchema = v.object({
 	item_id: IdSchema,
 	line_num: IdSchema,
 	ref_1c: v.nullable(ref1CSchema),
+	comment_customer: v.nullable(TextSchema),
+	comment_admin: v.nullable(TextSchema),
 });
 
 export const orderLineListFromDTO = (dto: unknown): OrderLineList => {

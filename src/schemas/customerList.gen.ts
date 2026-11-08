@@ -18,6 +18,7 @@ export const createCustomerListSchemas = (t: TranslateFn) => {
 		kpp: v.nullable(TextSchema),
 		ref_1c_exists: v.boolean(),
 		is_active: v.boolean(),
+		use_marking: v.boolean(),
 	});
 
 	const CustomerListSchema = v.object({
@@ -27,6 +28,7 @@ export const createCustomerListSchemas = (t: TranslateFn) => {
 		kpp: v.nullable(TextSchema),
 		ref_1c_exists: v.boolean(),
 		is_active: v.boolean(),
+		use_marking: v.boolean(),
 	});
 
 	return {

@@ -19,6 +19,7 @@ export const createCustomerFormModel = (): CustomerFormModel => ({
 	ref_1c: null,
 	is_active: true,
 	allow_holiday_orders: false,
+	use_marking: false,
 });
 
 export const customerFormMutationFields = [
@@ -28,6 +29,7 @@ export const customerFormMutationFields = [
 	"ref_1c",
 	"is_active",
 	"allow_holiday_orders",
+	"use_marking",
 ] satisfies FormMutationFieldConfig<
 	CustomerFormModel,
 	CustomerNew | CustomerUpd

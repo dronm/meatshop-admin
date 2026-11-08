@@ -90,7 +90,9 @@ const updateCustomerSalePlaceID = (value: number | null): void => {
 };
 
 const submit = async (): Promise<void> => {
-	await itemsGridRef.value?.commitPendingEdit();
+	if (await itemsGridRef.value?.commitPendingEdit() === false) {
+		return;
+	}
 	await nextTick();
 
 	emit("submit", {

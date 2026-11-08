@@ -12,6 +12,7 @@ import {
 
 import { userApi } from "@/api/user";
 import UserDialog from "@/components/user/UserDialog.vue";
+import { collectionGridOptions } from "@/config/collectionGrid";
 import type {
 	User,
 	UserKey,
@@ -144,6 +145,7 @@ watch(
 		</div>
 
 		<CollectionGrid
+			v-bind="collectionGridOptions"
 			ref="gridRef"
 			:api="userApi"
 			:columns="columns"

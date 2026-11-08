@@ -25,6 +25,7 @@ import { customerSalePlaceApi } from "@/api/customerSalePlace.gen";
 import { customerUserApi } from "@/api/customerUser";
 import { maxUserApi } from "@/api/maxUser.gen";
 import CustomerForm from "@/components/customer/CustomerForm.vue";
+import { collectionGridOptions } from "@/config/collectionGrid";
 import CounterpartyRef1cReferenceInput from "@/components/references/CounterpartyRef1cReferenceInput.vue";
 import { useCustomerSchemas } from "@/composables/schemas/useCustomerSchemas.gen";
 import {
@@ -366,6 +367,7 @@ const onCustomerUserActiveUpdate = (
 						{{ t("Customer.details.saveFirst") }}
 					</div>
 					<CollectionGrid
+						v-bind="collectionGridOptions"
 						v-else
 						:key="`customer-sale-points-${customerId}`"
 						:api="salePlaceApi"
@@ -432,6 +434,7 @@ const onCustomerUserActiveUpdate = (
 							{{ userUpdateError }}
 						</div>
 						<CollectionGrid
+							v-bind="collectionGridOptions"
 							:key="`customer-users-${customerId}`"
 							:api="customerUsersApi"
 							:columns="customerUserColumns"

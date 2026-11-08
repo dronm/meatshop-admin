@@ -20,6 +20,7 @@ const formatDateTime = (value: unknown): string => value instanceof Date
 const commands: GridCommand<ListModel, MaxOutMessageKey>[] = [
 	{ name: "search" },
 	{ name: "refresh" },
+	{ name: "resetColumnWidths" },
 ];
 
 export const maxOutMessageCollection = defineCollection<
@@ -31,6 +32,9 @@ export const maxOutMessageCollection = defineCollection<
 >({
 	titleKey: "MaxOutMessage.title",
 	api: maxOutMessageApi,
+	stickyHeader: true,
+	resizableColumns: true,
+	columnResizeMode: "expand",
 	columns: [
 		{
 			field: "id",

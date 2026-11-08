@@ -7,7 +7,10 @@ import {
 
 import api from "@/api/http";
 import { orderLineListFromDTO } from "@/schemas/orderLineList";
-import type { OrderLineListRow } from "@/types/orderLineList";
+import type {
+	OrderLineListRow,
+	OrderLinesRemoveResponse,
+} from "@/types/orderLineList";
 
 const list = async (
 	params?: CollectionParams,
@@ -29,7 +32,23 @@ const list = async (
 	};
 };
 
+const removeLines = async (
+	itemIDs: readonly number[],
+): Promise<OrderLinesRemoveResponse> => {
+	if (
+		itemIDs.length === 0 ||
+		itemIDs.some((id) => !Number.isInteger(id) || id <= 0)
+	) {
+		throw new Error("Не выбраны позиции заказа для удаления.");
+	}
+
+	return await api.post<OrderLinesRemoveResponse>("/order/remove-lines", {
+		item_ids: [...new Set(itemIDs)],
+	});
+};
+
 export const orderLineListApi = {
 	serviceName: "Order",
 	list,
+	removeLines,
 };

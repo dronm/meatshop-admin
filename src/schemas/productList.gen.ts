@@ -23,6 +23,7 @@ export const createProductListSchemas = (t: TranslateFn) => {
 		sort_order: IntSchema,
 		is_group: v.boolean(),
 		is_active: v.boolean(),
+		requires_weight_confirmation: v.boolean(),
 	});
 
 	const ProductListSchema = v.object({
@@ -35,6 +36,7 @@ export const createProductListSchemas = (t: TranslateFn) => {
 		sort_order: IntSchema,
 		is_group: v.boolean(),
 		is_active: v.boolean(),
+		requires_weight_confirmation: v.boolean(),
 	});
 
 	return {

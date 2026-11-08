@@ -10,6 +10,7 @@ export interface ProductDTO {
 	measure_unit_id: number | null;
 	is_group: boolean;
 	is_active: boolean;
+	requires_weight_confirmation: boolean;
 }
 
 export interface Product {
@@ -22,6 +23,7 @@ export interface Product {
 	measure_unit_id: number | null;
 	is_group: boolean;
 	is_active: boolean;
+	requires_weight_confirmation: boolean;
 }
 
 export type ProductKey = Pick<
@@ -30,11 +32,11 @@ export type ProductKey = Pick<
 >;
 export type ProductNew = Pick<
 	Product,
-	"parent_id" | "name" | "description" | "ref_1c" | "sort_order" | "measure_unit_id" | "is_group" | "is_active"
+	"parent_id" | "name" | "description" | "ref_1c" | "sort_order" | "measure_unit_id" | "is_group" | "is_active" | "requires_weight_confirmation"
 >;
 export type ProductUpd = Partial<Pick<
 	Product,
-	"parent_id" | "name" | "description" | "ref_1c" | "sort_order" | "measure_unit_id" | "is_group" | "is_active"
+	"parent_id" | "name" | "description" | "ref_1c" | "sort_order" | "measure_unit_id" | "is_group" | "is_active" | "requires_weight_confirmation"
 >>;
 
 export interface ProductUpdate {

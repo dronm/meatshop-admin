@@ -46,6 +46,7 @@ export const createOrderDocumentSchemas = (t: TranslateFn) => {
 		measure_unit_id: IdSchema,
 		quant_required: PositiveNumberSchema,
 		quant: NumberSchema,
+		weight_confirmed: v.boolean(),
 	});
 	const OrderDetailItemDTOSchema = v.object({
 		id: IdSchema,
@@ -56,6 +57,8 @@ export const createOrderDocumentSchemas = (t: TranslateFn) => {
 		measure_unit: v.nullable(IDReferenceSchema),
 		quant_required: NumberSchema,
 		quant: NumberSchema,
+		weight_confirmed: v.boolean(),
+		requires_weight_confirmation: v.boolean(),
 	});
 	const OrderDetailDTOSchema = v.object({
 		id: IdSchema,

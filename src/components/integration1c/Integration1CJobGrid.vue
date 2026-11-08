@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { collectionGridOptions } from "@/config/collectionGrid";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 
@@ -189,6 +190,7 @@ const getKey = (
 
 <template>
 	<CollectionGrid
+		v-bind="collectionGridOptions"
 		:api="jobsApi"
 		:columns="columns"
 		:commands="commands"

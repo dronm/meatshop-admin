@@ -7,6 +7,7 @@ export interface CustomerListDTO {
 	kpp: string | null;
 	ref_1c_exists: boolean;
 	is_active: boolean;
+	use_marking: boolean;
 }
 
 export interface CustomerList {
@@ -16,4 +17,5 @@ export interface CustomerList {
 	kpp: string | null;
 	ref_1c_exists: boolean;
 	is_active: boolean;
+	use_marking: boolean;
 }

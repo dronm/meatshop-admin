@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { collectionGridOptions } from "@/config/collectionGrid";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 
@@ -129,6 +130,7 @@ const getKey = (
 			{{ t("NotificationTemplate.recipients.title") }}
 		</h3>
 		<CollectionGrid
+			v-bind="collectionGridOptions"
 			:key="`notification-template-recipients-${normalizedTemplateId}`"
 			:api="api"
 			:columns="columns"

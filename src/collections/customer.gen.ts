@@ -23,6 +23,7 @@ const commands: GridCommand<ListModel, CustomerKey>[] = [
 	{ name: "delete" },
 	{ name: "search" },
 	{ name: "refresh" },
+	{ name: "resetColumnWidths" },
 ];
 
 export const customerCollection = defineCollection<
@@ -34,6 +35,9 @@ export const customerCollection = defineCollection<
 >({
 	titleKey: "Customer.title",
 	api: customerApi,
+	stickyHeader: true,
+	resizableColumns: true,
+	columnResizeMode: "expand",
 	columns: [
 		{
 			field: "id",
@@ -62,6 +66,13 @@ export const customerCollection = defineCollection<
 			dataType: "boolean",
 			width: "8rem",
 		},
+		{
+			field: "use_marking",
+			headerKey: "Customer.fields.use_marking",
+			sortable: true,
+			dataType: "boolean",
+			width: "9rem",
+		},
 	],
 	commands,
 	dataKey: "id",
@@ -86,5 +97,13 @@ export const customerCollection = defineCollection<
 	editMode: "page",
 	stateKey: "customer-grid",
 	pageSize: 30,
+	infiniteScroll: {
+		keyFields: ["id"],
+		chunkSize: 100,
+		prefetchRows: 30,
+		maxCachedChunks: 5,
+		scrollHeight: "32rem",
+		itemSize: 40,
+	},
 	showCommandShortcuts: false,
 });

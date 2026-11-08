@@ -30,9 +30,9 @@ const emit = defineEmits<{
 
 const options: OrderStatusOption[] = [
 	{ value: 1, label: "Новый" },
-	{ value: 2, label: "Принят" },
 	{ value: 3, label: "В обработке" },
-	{ value: 4, label: "Согласован" },
+	{ value: 2, label: "Готовим" },
+	{ value: 4, label: "На доставке" },
 	{ value: 5, label: "Выполнен" },
 	{ value: 6, label: "Отменен" },
 ];

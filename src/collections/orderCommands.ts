@@ -3,6 +3,7 @@ import { type GridCommand } from "@katren/vue-collection-lib";
 import { i18n } from "@/i18n";
 import type { OrderKey } from "@/types/orderDocument";
 import { createOrdersIn1C, createOrderShipments } from "@/utils/order1cActions";
+import { nextOrderStatusID } from "@/utils/orderStatus";
 import {
 	hasOrder1CReference,
 	openOrderPrintPopup,
@@ -12,11 +13,13 @@ import {
 interface OrderCommandRow {
 	id: number;
 	ref_1c: unknown;
+	status: unknown;
 }
 
 export type OrderStatusChangeHandler = (
 	orderIDs: readonly number[],
 	reload: () => Promise<void>,
+	initialStatusID: number | null,
 ) => void;
 
 const commandOrderIDs = (rows: readonly OrderCommandRow[]): number[] | null => {
@@ -121,7 +124,7 @@ export const createOrderCommands = <TRow extends OrderCommandRow>(
 					...new Set(rows.map((row) => row.id)),
 				];
 				if (orderIDs.length > 0) {
-					changeStatus(orderIDs, reload);
+					changeStatus(orderIDs, reload, nextOrderStatusID(rows));
 				}
 			},
 		});

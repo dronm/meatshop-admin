@@ -13,6 +13,7 @@ export interface OrderItemDTO {
 	vat_percent: number | null;
 	vat_amount: number | null;
 	use_marking: boolean;
+	weight_confirmed: boolean;
 }
 
 export interface OrderItem {
@@ -28,6 +29,7 @@ export interface OrderItem {
 	vat_percent: number | null;
 	vat_amount: number | null;
 	use_marking: boolean;
+	weight_confirmed: boolean;
 }
 
 export type OrderItemKey = Pick<

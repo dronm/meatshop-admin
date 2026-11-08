@@ -24,6 +24,7 @@ export const createProductSchemas = (t: TranslateFn) => {
 		measure_unit_id: v.nullable(IdSchema),
 		is_group: v.boolean(),
 		is_active: v.boolean(),
+		requires_weight_confirmation: v.boolean(),
 	});
 
 	const ProductSchema = v.object({
@@ -36,6 +37,7 @@ export const createProductSchemas = (t: TranslateFn) => {
 		measure_unit_id: v.nullable(IdSchema),
 		is_group: v.boolean(),
 		is_active: v.boolean(),
+		requires_weight_confirmation: v.boolean(),
 	});
 
 	const ProductKeySchema = v.pick(
@@ -55,6 +57,7 @@ export const createProductSchemas = (t: TranslateFn) => {
 			"measure_unit_id",
 			"is_group",
 			"is_active",
+			"requires_weight_confirmation",
 		],
 	);
 	const ProductUpdSchema = v.partial(v.pick(
@@ -68,6 +71,7 @@ export const createProductSchemas = (t: TranslateFn) => {
 			"measure_unit_id",
 			"is_group",
 			"is_active",
+			"requires_weight_confirmation",
 		],
 	));
 

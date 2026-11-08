@@ -5,7 +5,7 @@ import {
 } from "@katren/vue-collection-lib";
 
 import { orderLineListApi } from "@/api/orderLineList";
-import { createOrderCommands } from "@/collections/orderCommands";
+import { createOrderLineCommands } from "@/collections/orderLineCommands";
 import {
 	createCustomerSalePlaceReference,
 	customerReference,
@@ -137,7 +137,9 @@ const baseColumns: GridColumn<OrderLineListRow>[] = [
 		searchable: false,
 		sortable: true,
 		dataType: "boolean",
-		width: "7rem",
+		align: "center",
+		format: (value: unknown): string => value === true ? "да" : "нет",
+		width: "4.5rem",
 	},
 	{
 		field: "ref_1c",
@@ -152,6 +154,22 @@ const baseColumns: GridColumn<OrderLineListRow>[] = [
 		searchField: "shipment_ref_1c->>'descr'",
 		format: format1CReference,
 		width: "10rem",
+	},
+	{
+		field: "comment_customer",
+		headerKey: "OrderLineList.fields.comment_customer",
+		sortable: false,
+		dataType: "string",
+		align: "left",
+		width: "6rem",
+	},
+	{
+		field: "comment_admin",
+		headerKey: "OrderLineList.fields.comment_admin",
+		sortable: false,
+		dataType: "string",
+		align: "left",
+		width: "6rem",
 	},
 ];
 
@@ -170,10 +188,13 @@ export const orderLineCollection = defineCollection<OrderLineListRow, OrderKey>(
 	{
 		titleKey: "OrderLineList.title",
 		api: orderLineListApi,
+		stickyHeader: true,
+		resizableColumns: true,
+		columnResizeMode: "expand",
 		columns,
-		commands: createOrderCommands<OrderLineListRow>(),
+		commands: createOrderLineCommands(),
 		dataKey: "item_id",
-		getKey: (row) => ({ id: row.id }),
+		getKey: (row) => ({ id: row.item_id }),
 		routes: {
 			create: () => ({
 				name: "orderCreate",

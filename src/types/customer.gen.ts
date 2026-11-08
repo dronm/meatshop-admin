@@ -8,6 +8,7 @@ export interface CustomerDTO {
 	ref_1c: Record<string, unknown> | null;
 	is_active: boolean;
 	allow_holiday_orders: boolean;
+	use_marking: boolean;
 }
 
 export interface Customer {
@@ -18,6 +19,7 @@ export interface Customer {
 	ref_1c: Record<string, unknown> | null;
 	is_active: boolean;
 	allow_holiday_orders: boolean;
+	use_marking: boolean;
 }
 
 export type CustomerKey = Pick<
@@ -26,11 +28,11 @@ export type CustomerKey = Pick<
 >;
 export type CustomerNew = Pick<
 	Customer,
-	"name" | "inn" | "kpp" | "ref_1c" | "is_active" | "allow_holiday_orders"
+	"name" | "inn" | "kpp" | "ref_1c" | "is_active" | "allow_holiday_orders" | "use_marking"
 >;
 export type CustomerUpd = Partial<Pick<
 	Customer,
-	"name" | "inn" | "kpp" | "ref_1c" | "is_active" | "allow_holiday_orders"
+	"name" | "inn" | "kpp" | "ref_1c" | "is_active" | "allow_holiday_orders" | "use_marking"
 >>;
 
 export interface CustomerUpdate {

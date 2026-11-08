@@ -21,6 +21,7 @@ export const createProductFormModel = (): ProductFormModel => ({
 	is_group: false,
 	sort_order: 0,
 	is_active: true,
+	requires_weight_confirmation: false,
 });
 
 export const productFormMutationFields = [
@@ -32,6 +33,7 @@ export const productFormMutationFields = [
 	"measure_unit_id",
 	"is_group",
 	"is_active",
+	"requires_weight_confirmation",
 ] satisfies FormMutationFieldConfig<
 	ProductFormModel,
 	ProductNew | ProductUpd

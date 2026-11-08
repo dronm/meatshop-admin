@@ -3,7 +3,7 @@ import type { CollectionFormMode } from "@katren/vue-collection-lib";
 import type {
 	OrderDetail,
 	OrderDocument,
-	OrderDocumentItem,
+	OrderFormItem,
 	OrderFormModel,
 } from "@/types/orderDocument";
 import { normalizeRef1C } from "@/utils/ref1c";
@@ -19,7 +19,7 @@ const optionalID = (value: number | null | undefined): number | null => {
 		: null;
 };
 
-const copiedItems = (items: OrderDetail["items"]): OrderDocumentItem[] => {
+const copiedItems = (items: OrderDetail["items"]): OrderFormItem[] => {
 	return items.map((item, index) => ({
 		id: -(index + 1),
 		line_num: index + 1,
@@ -27,6 +27,9 @@ const copiedItems = (items: OrderDetail["items"]): OrderDocumentItem[] => {
 		measure_unit_id: item.measure_unit_id,
 		quant_required: item.quant_required,
 		quant: item.quant,
+		weight_confirmed: false,
+		requires_weight_confirmation: item.requires_weight_confirmation,
+		weight_confirmation_requested: false,
 	}));
 };
 
@@ -43,7 +46,7 @@ export const createOrderDocumentFormModel = (): OrderFormModel => ({
 	customer_sale_place: null,
 	customer_user_id: null,
 	customer_user: null,
-	status_id: null,
+	status_id: 1,
 	status: null,
 	comment_customer: null,
 	comment_admin: null,
@@ -76,6 +79,9 @@ export const orderDocumentToFormModel = (
 		measure_unit_id: item.measure_unit_id,
 		quant_required: item.quant_required,
 		quant: item.quant,
+		weight_confirmed: item.weight_confirmed,
+		requires_weight_confirmation: item.requires_weight_confirmation,
+		weight_confirmation_requested: false,
 	})),
 });
 
@@ -88,6 +94,8 @@ export const copyOrderDocumentFormModel = (
 	number_1c: null,
 	ref_1c: null,
 	shipment_ref_1c: null,
+	status_id: 1,
+	status: null,
 	items: copiedItems(detail.items),
 } as OrderFormModel);
 
@@ -111,6 +119,7 @@ export const orderFormModelToDocument = (
 			measure_unit_id: item.measure_unit_id,
 			quant_required: item.quant_required,
 			quant: item.quant,
+			weight_confirmed: item.weight_confirmed,
 		}));
 
 	return {

@@ -22,6 +22,7 @@ export const createCustomerSchemas = (t: TranslateFn) => {
 		ref_1c: v.nullable(AttrsSchema),
 		is_active: v.boolean(),
 		allow_holiday_orders: v.boolean(),
+		use_marking: v.boolean(),
 	});
 
 	const CustomerSchema = v.object({
@@ -32,6 +33,7 @@ export const createCustomerSchemas = (t: TranslateFn) => {
 		ref_1c: v.nullable(AttrsSchema),
 		is_active: v.boolean(),
 		allow_holiday_orders: v.boolean(),
+		use_marking: v.boolean(),
 	});
 
 	const CustomerKeySchema = v.pick(
@@ -49,6 +51,7 @@ export const createCustomerSchemas = (t: TranslateFn) => {
 			"ref_1c",
 			"is_active",
 			"allow_holiday_orders",
+			"use_marking",
 		],
 	);
 	const CustomerUpdSchema = v.partial(v.pick(
@@ -60,6 +63,7 @@ export const createCustomerSchemas = (t: TranslateFn) => {
 			"ref_1c",
 			"is_active",
 			"allow_holiday_orders",
+			"use_marking",
 		],
 	));
 

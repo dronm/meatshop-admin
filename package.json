@@ -18,7 +18,7 @@
 		"@fortawesome/free-solid-svg-icons": "^7.2.0",
 		"@fortawesome/vue-fontawesome": "^3.2.0",
 		"@katren/vue-business-app": "^0.1.2",
-		"@katren/vue-collection-lib": "^0.1.8",
+		"@katren/vue-collection-lib": "^0.1.15",
 		"@primeuix/themes": "^2.0.3",
 		"maska": "^3.2.0",
 		"pinia": "^3.0.4",

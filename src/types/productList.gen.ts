@@ -10,6 +10,7 @@ export interface ProductListDTO {
 	sort_order: number;
 	is_group: boolean;
 	is_active: boolean;
+	requires_weight_confirmation: boolean;
 }
 
 export interface ProductList {
@@ -22,4 +23,5 @@ export interface ProductList {
 	sort_order: number;
 	is_group: boolean;
 	is_active: boolean;
+	requires_weight_confirmation: boolean;
 }

@@ -11,6 +11,8 @@ export interface OrderLineList {
 	customer_sale_place: IDReference | null;
 	product: IDReference | null;
 	quant: number;
+	requires_weight_confirmation: boolean;
+	weight_confirmed: boolean;
 	price: number | null;
 	amount: number | null;
 	vat_amount: number | null;
@@ -18,8 +20,14 @@ export interface OrderLineList {
 	item_id: number;
 	line_num: number;
 	ref_1c: Ref1C | null;
+	comment_customer: string | null;
+	comment_admin: string | null;
 }
 
 export interface OrderLineListRow extends OrderLineList {
 	group_start: boolean;
+}
+
+export interface OrderLinesRemoveResponse {
+	rows_affected: number;
 }

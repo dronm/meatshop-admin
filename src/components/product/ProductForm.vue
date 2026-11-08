@@ -89,6 +89,7 @@ const submit = (): void => {
 		measure_unit_id: measureUnitID,
 		is_group: form.value.is_group === true,
 		is_active: form.value.is_active === true,
+		requires_weight_confirmation: form.value.requires_weight_confirmation === true,
 	};
 
 	emit("submit", model);
@@ -219,6 +220,22 @@ const submit = (): void => {
 					rows="3"
 					autoResize
 					class="w-full"
+				/>
+			</FormField>
+
+			<FormField
+				v-if="!form.is_group"
+				field="requires_weight_confirmation"
+				forId="productRequiresWeightConfirmation"
+				:label="t('Product.fields.requires_weight_confirmation')"
+				:errors="props.errors"
+				v-slot="{ invalid }"
+			>
+				<Checkbox
+					v-model="form.requires_weight_confirmation"
+					inputId="productRequiresWeightConfirmation"
+					:invalid="invalid"
+					binary
 				/>
 			</FormField>
 

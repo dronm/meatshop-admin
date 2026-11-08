@@ -45,8 +45,13 @@ const migrateOrderSorter = (): void => {
 
 migrateOrderSorter();
 
-const { statusDialogVisible, statusOrderIDs, openStatusDialog, statusChanged } =
-	useOrderBatchStatus();
+const {
+	statusDialogVisible,
+	statusOrderIDs,
+	suggestedStatusID,
+	openStatusDialog,
+	statusChanged,
+} = useOrderBatchStatus();
 
 const collection = {
 	...orderCollection,
@@ -59,6 +64,7 @@ const collection = {
 	<OrderBatchStatusDialog
 		v-model:visible="statusDialogVisible"
 		:orderIDs="statusOrderIDs"
+		:initialStatusID="suggestedStatusID"
 		@saved="statusChanged"
 	/>
 </template>
