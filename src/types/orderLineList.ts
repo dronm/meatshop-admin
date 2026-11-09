@@ -4,6 +4,8 @@ import type { Ref1C } from "@/types/ref1c";
 // The id belongs to the order; item_id uniquely identifies the displayed line.
 export interface OrderLineList {
 	id: number;
+	number_1c: string | null;
+	shipment_number_1c: string | null;
 	for_date: Date;
 	status: IDReference | null;
 	shipment_ref_1c: Ref1C | null;
@@ -17,6 +19,7 @@ export interface OrderLineList {
 	amount: number | null;
 	vat_amount: number | null;
 	use_marking: boolean;
+	mercury: boolean;
 	item_id: number;
 	line_num: number;
 	ref_1c: Ref1C | null;
@@ -28,6 +31,6 @@ export interface OrderLineListRow extends OrderLineList {
 	group_start: boolean;
 }
 
-export interface OrderLinesRemoveResponse {
+export interface OrderLinesMutationResponse {
 	rows_affected: number;
 }

@@ -129,7 +129,8 @@
 				"measure_unit_id": "Ед. изм.",
 				"quant_required": "Количество заказано",
 				"quant": "Количество",
-				"weight_confirmed": "Без изменений"
+				"weight_confirmed": "Без изменений",
+				"mercury": "Меркурий"
 			},
 			"errors": {
 				"required": "Добавьте хотя бы одну позицию заказа",
@@ -166,12 +167,15 @@
 	"OrderLineList": {
 		"title": "Строки заказов",
 		"actions": {
-			"remove": "Удалить позицию"
+			"remove": "Удалить позицию",
+			"toggleMercury": "Меркурий"
 		},
 		"feedback": {
 			"confirmRemove": "Удалить позиции ({count})?",
 			"removeFailed": "Не удалось удалить позиции заказа.",
-			"refreshFailed": "Позиции удалены, но не удалось обновить список. Нажмите «Обновить»."
+			"refreshFailed": "Позиции удалены, но не удалось обновить список. Нажмите «Обновить».",
+			"toggleMercuryFailed": "Не удалось изменить отметку «Меркурий».",
+			"toggleMercuryRefreshFailed": "Отметка «Меркурий» сохранена, но не удалось обновить список. Нажмите «Обновить»."
 		},
 		"fields": {
 			"id": "№",
@@ -185,8 +189,9 @@
 			"amount": "Сумма",
 			"vat_amount": "НДС",
 			"use_marking": "Марк.",
-			"ref_1c": "Заказ 1С",
-			"shipment_ref_1c": "Отгрузка 1С",
+			"mercury": "Меркурий",
+			"number_1c": "Заказ 1С",
+			"shipment_number_1c": "Отгрузка 1С",
 			"comment_customer": "Коммент.клиента",
 			"comment_admin": "Примечание"
 		}

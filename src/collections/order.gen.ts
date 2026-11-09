@@ -26,7 +26,6 @@ const commands: GridCommand<ListModel, OrderKey>[] = [
 	{ name: "delete" },
 	{ name: "search" },
 	{ name: "refresh" },
-	{ name: "resetColumnWidths" },
 ];
 
 export const orderCollection = defineCollection<
@@ -38,9 +37,6 @@ export const orderCollection = defineCollection<
 >({
 	titleKey: "Order.title",
 	api: orderApi,
-	stickyHeader: true,
-	resizableColumns: true,
-	columnResizeMode: "expand",
 	columns: [
 		{
 			field: "id",

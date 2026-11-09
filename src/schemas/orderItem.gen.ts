@@ -26,6 +26,7 @@ export const createOrderItemSchemas = (t: TranslateFn) => {
 		vat_amount: v.nullable(NumberSchema),
 		use_marking: v.boolean(),
 		weight_confirmed: v.boolean(),
+		mercury: v.boolean(),
 	});
 
 	const OrderItemSchema = v.object({
@@ -42,6 +43,7 @@ export const createOrderItemSchemas = (t: TranslateFn) => {
 		vat_amount: v.nullable(NumberSchema),
 		use_marking: v.boolean(),
 		weight_confirmed: v.boolean(),
+		mercury: v.boolean(),
 	});
 
 	const OrderItemKeySchema = v.pick(

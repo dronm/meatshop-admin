@@ -196,6 +196,18 @@ const columns: GridColumn<OrderFormItem>[] = [
 		align: "center",
 		width: "10rem",
 	},
+	{
+		field: "mercury",
+		headerKey: "Order.items.fields.mercury",
+		editable: true,
+		dataType: "boolean",
+		searchable: false,
+		align: "center",
+		width: "8rem",
+		editorProps: {
+			"aria-label": t("Order.items.fields.mercury"),
+		},
+	},
 ];
 
 const commands: GridCommand<OrderFormItem, { id: number }>[] = [
@@ -212,6 +224,7 @@ const collection = useLocalDocumentCollection<OrderFormItem>({
 		measure_unit_id: 0,
 		quant_required: 0,
 		quant: 0,
+		mercury: false,
 		weight_confirmed: false,
 		requires_weight_confirmation: false,
 		weight_confirmation_requested: false,

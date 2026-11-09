@@ -17,15 +17,18 @@ export interface OrderDocumentItem {
 	measure_unit_id: number;
 	quant_required: number;
 	quant: number;
+	mercury?: boolean;
 	weight_confirmed: boolean;
 }
 
 export interface OrderFormItem extends OrderDocumentItem {
+	mercury: boolean;
 	requires_weight_confirmation: boolean | null;
 	weight_confirmation_requested: boolean;
 }
 
 export interface OrderDetailItem extends OrderDocumentItem {
+	mercury: boolean;
 	requires_weight_confirmation: boolean;
 	product: IDReference | null;
 	measure_unit: IDReference | null;

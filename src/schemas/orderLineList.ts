@@ -20,6 +20,8 @@ const ref1CSchema = v.object({
 
 const orderLineListSchema = v.object({
 	id: IdSchema,
+	number_1c: v.nullish(TextSchema, null),
+	shipment_number_1c: v.nullish(TextSchema, null),
 	for_date: DateStringSchema,
 	status: v.nullable(referenceSchema),
 	shipment_ref_1c: v.nullable(ref1CSchema),
@@ -33,6 +35,7 @@ const orderLineListSchema = v.object({
 	amount: v.nullable(NumberSchema),
 	vat_amount: v.nullable(NumberSchema),
 	use_marking: v.boolean(),
+	mercury: v.boolean(),
 	item_id: IdSchema,
 	line_num: IdSchema,
 	ref_1c: v.nullable(ref1CSchema),

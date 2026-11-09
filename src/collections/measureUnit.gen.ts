@@ -22,7 +22,6 @@ const commands: GridCommand<ListModel, MeasureUnitKey>[] = [
 	{ name: "delete" },
 	{ name: "search" },
 	{ name: "refresh" },
-	{ name: "resetColumnWidths" },
 ];
 
 export const measureUnitCollection = defineCollection<
@@ -34,9 +33,6 @@ export const measureUnitCollection = defineCollection<
 >({
 	titleKey: "MeasureUnit.title",
 	api: measureUnitApi,
-	stickyHeader: true,
-	resizableColumns: true,
-	columnResizeMode: "expand",
 	columns: [
 		{
 			field: "id",

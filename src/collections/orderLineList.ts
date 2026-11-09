@@ -31,15 +31,6 @@ const formatDecimal = (fractionDigits: number) => {
 			: "";
 };
 
-const format1CReference = (value: unknown): string => {
-	if (value === null || typeof value !== "object") {
-		return "";
-	}
-
-	const descr = (value as { descr?: unknown }).descr;
-	return typeof descr === "string" ? descr : "";
-};
-
 const baseColumns: GridColumn<OrderLineListRow>[] = [
 	{
 		field: "id",
@@ -142,17 +133,21 @@ const baseColumns: GridColumn<OrderLineListRow>[] = [
 		width: "4.5rem",
 	},
 	{
-		field: "ref_1c",
-		headerKey: "OrderLineList.fields.ref_1c",
-		searchField: "ref_1c->>'descr'",
-		format: format1CReference,
+		field: "mercury",
+		headerKey: "OrderLineList.fields.mercury",
+		searchable: false,
+		dataType: "boolean",
+		align: "center",
+		width: "7rem",
+	},
+	{
+		field: "number_1c",
+		headerKey: "OrderLineList.fields.number_1c",
 		width: "10rem",
 	},
 	{
-		field: "shipment_ref_1c",
-		headerKey: "OrderLineList.fields.shipment_ref_1c",
-		searchField: "shipment_ref_1c->>'descr'",
-		format: format1CReference,
+		field: "shipment_number_1c",
+		headerKey: "OrderLineList.fields.shipment_number_1c",
 		width: "10rem",
 	},
 	{

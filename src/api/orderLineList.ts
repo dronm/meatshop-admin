@@ -9,7 +9,7 @@ import api from "@/api/http";
 import { orderLineListFromDTO } from "@/schemas/orderLineList";
 import type {
 	OrderLineListRow,
-	OrderLinesRemoveResponse,
+	OrderLinesMutationResponse,
 } from "@/types/orderLineList";
 
 const list = async (
@@ -34,7 +34,7 @@ const list = async (
 
 const removeLines = async (
 	itemIDs: readonly number[],
-): Promise<OrderLinesRemoveResponse> => {
+): Promise<OrderLinesMutationResponse> => {
 	if (
 		itemIDs.length === 0 ||
 		itemIDs.some((id) => !Number.isInteger(id) || id <= 0)
@@ -42,7 +42,22 @@ const removeLines = async (
 		throw new Error("Не выбраны позиции заказа для удаления.");
 	}
 
-	return await api.post<OrderLinesRemoveResponse>("/order/remove-lines", {
+	return await api.post<OrderLinesMutationResponse>("/order/remove-lines", {
+		item_ids: [...new Set(itemIDs)],
+	});
+};
+
+const toggleMercury = async (
+	itemIDs: readonly number[],
+): Promise<OrderLinesMutationResponse> => {
+	if (
+		itemIDs.length === 0 ||
+		itemIDs.some((id) => !Number.isInteger(id) || id <= 0)
+	) {
+		throw new Error("Не выбраны позиции заказа для отметки «Меркурий».");
+	}
+
+	return await api.post<OrderLinesMutationResponse>("/order/toggle-lines-mercury", {
 		item_ids: [...new Set(itemIDs)],
 	});
 };
@@ -51,4 +66,5 @@ export const orderLineListApi = {
 	serviceName: "Order",
 	list,
 	removeLines,
+	toggleMercury,
 };

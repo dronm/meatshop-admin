@@ -27,6 +27,7 @@ const copiedItems = (items: OrderDetail["items"]): OrderFormItem[] => {
 		measure_unit_id: item.measure_unit_id,
 		quant_required: item.quant_required,
 		quant: item.quant,
+		mercury: item.mercury === true,
 		weight_confirmed: false,
 		requires_weight_confirmation: item.requires_weight_confirmation,
 		weight_confirmation_requested: false,
@@ -79,6 +80,7 @@ export const orderDocumentToFormModel = (
 		measure_unit_id: item.measure_unit_id,
 		quant_required: item.quant_required,
 		quant: item.quant,
+		mercury: item.mercury === true,
 		weight_confirmed: item.weight_confirmed,
 		requires_weight_confirmation: item.requires_weight_confirmation,
 		weight_confirmation_requested: false,
@@ -102,8 +104,12 @@ export const copyOrderDocumentFormModel = (
 export const orderFormModelToDocument = (
 	form: OrderFormModel,
 	mode: CollectionFormMode,
+	loadedItems: readonly OrderFormItem[] = [],
 ): OrderDocument => {
 	const isEdit = mode === "edit";
+	const loadedMercuryByID = new Map(
+		loadedItems.map((item) => [item.id, item.mercury === true]),
+	);
 	const items = [...form.items]
 		.map((item, index) => ({
 			...item,
@@ -112,15 +118,22 @@ export const orderFormModelToDocument = (
 				: index + 1,
 		}))
 		.sort((left, right) => left.line_num - right.line_num)
-		.map((item, index) => ({
-			id: isEdit && item.id > 0 ? item.id : 0,
-			line_num: index + 1,
-			product_id: item.product_id,
-			measure_unit_id: item.measure_unit_id,
-			quant_required: item.quant_required,
-			quant: item.quant,
-			weight_confirmed: item.weight_confirmed,
-		}));
+		.map((item, index) => {
+			const id = isEdit && item.id > 0 ? item.id : 0;
+			const mercury = item.mercury === true;
+			return {
+				id,
+				line_num: index + 1,
+				product_id: item.product_id,
+				measure_unit_id: item.measure_unit_id,
+				quant_required: item.quant_required,
+				quant: item.quant,
+				...(id === 0 || mercury !== loadedMercuryByID.get(id)
+					? { mercury }
+					: {}),
+				weight_confirmed: item.weight_confirmed,
+			};
+		});
 
 	return {
 		id: isEdit ? form.id : 0,

@@ -16,8 +16,6 @@ import { customerFromDTO } from "@/schemas/customer.gen";
 
 const basePath = "/customer";
 
-// The application-owned createCrudApi must forward complete CollectionParams,
-// including where, to the collection query serializer.
 const customerCrudApi = createCrudApi<
 	CustomerList,
 	CustomerListDTO,

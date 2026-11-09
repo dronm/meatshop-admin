@@ -174,7 +174,7 @@ const printShipment = async (): Promise<void> => {
 };
 
 const submit = async (model: OrderFormModel): Promise<void> => {
-	const document = orderFormModelToDocument(model, edit.mode.value);
+	const document = orderFormModelToDocument(model, edit.mode.value, edit.model.value.items);
 	await edit.submit(document);
 };
 </script>
