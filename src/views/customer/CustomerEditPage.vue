@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import Checkbox from "primevue/checkbox";
 import InputText from "primevue/inputtext";
@@ -25,6 +26,11 @@ import { customerSalePlaceApi } from "@/api/customerSalePlace.gen";
 import { customerUserApi } from "@/api/customerUser";
 import { maxUserApi } from "@/api/maxUser.gen";
 import CustomerForm from "@/components/customer/CustomerForm.vue";
+import CustomerMessagesPanel from "@/components/customerMessage/CustomerMessagesPanel.vue";
+import { customerMessageApi } from "@/api/customerMessage";
+import { useCustomerMessagesStore } from "@/stores/useCustomerMessagesStore";
+import { useAuthStore } from "@/stores/useAuthStore";
+import { positiveMessageId } from "@/utils/customerMessage";
 import { collectionGridOptions } from "@/config/collectionGrid";
 import CounterpartyRef1cReferenceInput from "@/components/references/CounterpartyRef1cReferenceInput.vue";
 import { useCustomerSchemas } from "@/composables/schemas/useCustomerSchemas.gen";
@@ -46,14 +52,8 @@ import type {
 	CustomerSalePlaceUpd,
 } from "@/types/customerSalePlace.gen";
 import type { CustomerSalePlaceList } from "@/types/customerSalePlaceList.gen";
-import type {
-	CustomerUser,
-	CustomerUserKey,
-} from "@/types/customerUser";
-import {
-	normalizeRef1C,
-	ref1CDescription,
-} from "@/utils/ref1c";
+import type { CustomerUser, CustomerUserKey } from "@/types/customerUser";
+import { normalizeRef1C, ref1CDescription } from "@/utils/ref1c";
 
 const { t } = useI18n();
 const schemas = useCustomerSchemas();
@@ -70,11 +70,12 @@ const edit = useCollectionEditPage<
 	keyFromRoute: (route) => ({
 		id: Number(route.params.id ?? 0),
 	}),
-	copyKeyFromRoute: (route) => route.query.copy_id
-		? ({
-			id: Number(route.query.copy_id ?? 0),
-		})
-		: null,
+	copyKeyFromRoute: (route) =>
+		route.query.copy_id
+			? {
+					id: Number(route.query.copy_id ?? 0),
+				}
+			: null,
 	createModel: createCustomerFormModel,
 	copyModel: (detail) => ({
 		...detail,
@@ -91,6 +92,51 @@ const customerId = computed<number | null>(() => {
 	const id = edit.model.value.id;
 	return typeof id === "number" && id > 0 ? id : null;
 });
+
+const route = useRoute();
+const router = useRouter();
+const auth = useAuthStore();
+const messages = useCustomerMessagesStore();
+const activeTab = ref<string | number>("common");
+const customerUnread = ref(0);
+const canViewMessages = computed(() => auth.user?.role_id === "admin");
+const focusMessageId = computed(() =>
+	positiveMessageId(route.query.message_id),
+);
+const clearMessageFocus = (): void => {
+	const query = { ...route.query };
+	delete query.message_id;
+	void router.replace({ query });
+};
+let unreadRequest = 0;
+watch(
+	() => route.query.tab,
+	(value) => {
+		if (value === "messages" && canViewMessages.value) {
+			activeTab.value = "messages";
+		}
+	},
+	{ immediate: true },
+);
+watch(
+	[customerId, () => messages.revision, canViewMessages],
+	async ([id, , allowed]) => {
+		const request = ++unreadRequest;
+		if (id === null || !allowed) {
+			customerUnread.value = 0;
+			return;
+		}
+		try {
+			const count = await customerMessageApi.unreadCount(id);
+			if (request === unreadRequest) {
+				customerUnread.value = count;
+			}
+		} catch {
+			// The history panel and global inbox expose load errors with retry.
+		}
+	},
+	{ immediate: true },
+);
 
 const submit = async (model: CustomerNew): Promise<void> => {
 	await edit.submit(model);
@@ -212,9 +258,7 @@ const createSalePlaceModel = (
 	is_active: true,
 });
 
-const getSalePlaceKey = (
-	row: CustomerSalePlaceList,
-): CustomerSalePlaceKey => ({
+const getSalePlaceKey = (row: CustomerSalePlaceList): CustomerSalePlaceKey => ({
 	id: row.id,
 });
 
@@ -306,15 +350,11 @@ const updateCustomerUserActive = async (
 	setUserUpdating(row.id, true);
 
 	try {
-		await maxUserApi.update(
-			{ id: row.id },
-			{ is_active: value },
-		);
+		await maxUserApi.update({ id: row.id }, { is_active: value });
 	} catch (error: unknown) {
 		row.is_active = previousValue;
-		userUpdateError.value = error instanceof Error
-			? error.message
-			: String(error);
+		userUpdateError.value =
+			error instanceof Error ? error.message : String(error);
 	} finally {
 		setUserUpdating(row.id, false);
 	}
@@ -334,7 +374,7 @@ const onCustomerUserActiveUpdate = (
 		:loading="edit.loading.value"
 		@back="edit.goBack"
 	>
-		<Tabs value="common">
+		<Tabs v-model:value="activeTab">
 			<TabList>
 				<Tab value="common">
 					{{ t("Customer.tabs.common") }}
@@ -345,6 +385,14 @@ const onCustomerUserActiveUpdate = (
 				<Tab value="users">
 					{{ t("Customer.tabs.users") }}
 				</Tab>
+				<Tab v-if="canViewMessages" value="messages">
+					{{ t("CustomerMessage.tab") }}
+					<span
+						v-if="customerUnread > 0"
+						class="customer-messages-tab-badge"
+						>{{ customerUnread }}</span
+					>
+				</Tab>
 			</TabList>
 
 			<TabPanels>
@@ -353,7 +401,9 @@ const onCustomerUserActiveUpdate = (
 						:model="edit.model.value"
 						:mode="edit.mode.value"
 						:errors="edit.errors"
-						:submitting="edit.submitting.value"
+						:submitting="
+							edit.submitting.value
+						"
 						@submit="submit"
 						@cancel="edit.goBack"
 					/>
@@ -364,7 +414,11 @@ const onCustomerUserActiveUpdate = (
 						v-if="customerId === null"
 						class="customer-detail-placeholder"
 					>
-						{{ t("Customer.details.saveFirst") }}
+						{{
+							t(
+								"Customer.details.saveFirst",
+							)
+						}}
 					</div>
 					<CollectionGrid
 						v-bind="collectionGridOptions"
@@ -375,7 +429,9 @@ const onCustomerUserActiveUpdate = (
 						:commands="salePlaceCommands"
 						:getKey="getSalePlaceKey"
 						:createRow="createSalePlaceRow"
-						:createModel="createSalePlaceModel"
+						:createModel="
+							createSalePlaceModel
+						"
 						:defaultSorter="[
 							{
 								f: 'name',
@@ -387,33 +443,59 @@ const onCustomerUserActiveUpdate = (
 						commandsMode="replace"
 						:pageSize="20"
 					>
-						<template #editor-name="{ data }">
+						<template
+							#editor-name="{ data }"
+						>
 							<InputText
-								v-model="data.name"
+								v-model="
+									data.name
+								"
 								class="w-full"
 								required
 							/>
 						</template>
-						<template #editor-address="{ data }">
+						<template
+							#editor-address="{
+								data,
+							}"
+						>
 							<InputText
-								v-model="data.address"
+								v-model="
+									data.address
+								"
 								class="w-full"
 							/>
 						</template>
-						<template #editor-kpp="{ data }">
+						<template
+							#editor-kpp="{ data }"
+						>
 							<InputText
-								v-model="data.kpp"
+								v-model="
+									data.kpp
+								"
 								class="w-full"
 								maxlength="10"
 							/>
 						</template>
-						<template #body-ref_1c="{ value }">
-							{{ ref1CDescription(value) }}
+						<template
+							#body-ref_1c="{ value }"
+						>
+							{{
+								ref1CDescription(
+									value,
+								)
+							}}
 						</template>
-						<template #editor-ref_1c="{ data }">
+						<template
+							#editor-ref_1c="{
+								data,
+							}"
+						>
 							<CounterpartyRef1cReferenceInput
 								:id="`customerSalePlaceRef1C-${data.id}`"
-								v-model="data.ref_1c"
+								v-model="
+									data.ref_1c
+								"
 							/>
 						</template>
 					</CollectionGrid>
@@ -424,7 +506,11 @@ const onCustomerUserActiveUpdate = (
 						v-if="customerId === null"
 						class="customer-detail-placeholder"
 					>
-						{{ t("Customer.details.saveFirst") }}
+						{{
+							t(
+								"Customer.details.saveFirst",
+							)
+						}}
 					</div>
 					<div v-else>
 						<div
@@ -434,12 +520,20 @@ const onCustomerUserActiveUpdate = (
 							{{ userUpdateError }}
 						</div>
 						<CollectionGrid
-							v-bind="collectionGridOptions"
+							v-bind="
+								collectionGridOptions
+							"
 							:key="`customer-users-${customerId}`"
 							:api="customerUsersApi"
-							:columns="customerUserColumns"
-							:commands="customerUserCommands"
-							:getKey="getCustomerUserKey"
+							:columns="
+								customerUserColumns
+							"
+							:commands="
+								customerUserCommands
+							"
+							:getKey="
+								getCustomerUserKey
+							"
 							:defaultSorter="[
 								{
 									f: 'username',
@@ -452,25 +546,83 @@ const onCustomerUserActiveUpdate = (
 							eventService="MaxUser"
 							:pageSize="20"
 						>
-							<template #body-avatar_url="{ value }">
+							<template
+								#body-avatar_url="{
+									value,
+								}"
+							>
 								<img
-									v-if="value"
-									:src="String(value)"
-									:alt="t('CustomerUser.fields.avatar_url')"
+									v-if="
+										value
+									"
+									:src="
+										String(
+											value,
+										)
+									"
+									:alt="
+										t(
+											'CustomerUser.fields.avatar_url',
+										)
+									"
 									class="customer-user-avatar"
 								/>
 							</template>
-							<template #body-is_active="{ data }">
+							<template
+								#body-is_active="{
+									data,
+								}"
+							>
 								<Checkbox
-									:modelValue="data.is_active"
-									:disabled="isUserUpdating(data.id)"
+									:modelValue="
+										data.is_active
+									"
+									:disabled="
+										isUserUpdating(
+											data.id,
+										)
+									"
 									binary
 									@click.stop
-									@update:modelValue="onCustomerUserActiveUpdate(data, $event)"
+									@update:modelValue="
+										onCustomerUserActiveUpdate(
+											data,
+											$event,
+										)
+									"
 								/>
 							</template>
 						</CollectionGrid>
 					</div>
+				</TabPanel>
+				<TabPanel
+					v-if="canViewMessages"
+					value="messages"
+				>
+					<div
+						v-if="customerId === null"
+						class="customer-detail-placeholder"
+					>
+						{{
+							t(
+								"Customer.details.saveFirst",
+							)
+						}}
+					</div>
+					<CustomerMessagesPanel
+						v-else
+						:key="customerId"
+						:customer-id="customerId"
+						:active="
+							activeTab === 'messages'
+						"
+						:focus-message-id="
+							focusMessageId
+						"
+						@close-focused-message="
+							clearMessageFocus
+						"
+					/>
 				</TabPanel>
 			</TabPanels>
 		</Tabs>
@@ -478,6 +630,14 @@ const onCustomerUserActiveUpdate = (
 </template>
 
 <style scoped>
+.customer-messages-tab-badge {
+	margin-left: 0.4rem;
+	padding: 0.1rem 0.45rem;
+	border-radius: 1rem;
+	background: #0284c7;
+	color: white;
+	font-size: 0.75rem;
+}
 .customer-detail-placeholder {
 	border: 1px dashed var(--p-surface-300, #d1d5db);
 	border-radius: 0.5rem;

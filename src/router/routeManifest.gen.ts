@@ -5,6 +5,7 @@ import type { RouteRecordRaw } from "vue-router";
 import type { ApplicationRouteManifestItem } from "@katren/vue-business-app/application-routes";
 const CustomerList = () => import("@/views/customer/CustomerList.vue");
 const CustomerEditPage = () => import("@/views/customer/CustomerEditPage.vue");
+const CustomerMessageList = () => import("@/views/customerMessage/CustomerMessageList.vue");
 const MaxInMessageList = () => import("@/views/maxInMessage/MaxInMessageList.vue");
 const MaxOutMessageList = () => import("@/views/maxOutMessage/MaxOutMessageList.vue");
 const MaxUserList = () => import("@/views/maxUser/MaxUserList.vue");
@@ -70,6 +71,19 @@ export const generatedRouteManifest: GeneratedRouteManifestEntry[] = [
 			descr: "Покупатель",
 			section: "Формы",
 			icon: null,
+			menu_available: false,
+		},
+	),
+	defineGeneratedRoute(
+		{
+			path: "/customer-messages",
+			name: "customerMessages",
+			component: CustomerMessageList,
+		},
+		{
+			descr: "Сообщения покупателей",
+			section: "Покупатели",
+			icon: "pi pi-comments",
 			menu_available: false,
 		},
 	),

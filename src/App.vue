@@ -11,6 +11,7 @@ import CollectionDirtyGuard from "@katren/vue-collection-lib/components/form/Col
 import wsManager from "@/api/wsConn";
 import { useAuthStore } from "@/stores/useAuthStore";
 import Login from "@/views/Login.vue";
+import CustomerMessageNotifications from "@/components/customerMessage/CustomerMessageNotifications.vue";
 
 const {
 	menu,
@@ -125,6 +126,9 @@ watch(
 			@all-routes="openApplicationRoutes"
 			@logout="handleLogout"
 		></HorizontalMainMenu>
+		<CustomerMessageNotifications
+			v-if="!referenceSelectionMode && userRoleId === 'admin'"
+		/>
 
 		<ProgAboutDialog v-model:visible="progAboutVisible" />
 
@@ -133,7 +137,9 @@ watch(
 			:class="
 				referenceSelectionMode
 					? 'min-h-screen'
-					: 'min-h-[calc(100vh-4rem)] pb-8'
+					: userRoleId === 'admin'
+						? 'min-h-[calc(100vh-7rem)] pb-8'
+						: 'min-h-[calc(100vh-4rem)] pb-8'
 			"
 		>
 			<div

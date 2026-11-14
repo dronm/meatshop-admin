@@ -45,7 +45,8 @@ const manualRouteManifest: RouteManifestEntry[] = [
 		{
 			path: "/integration-1c/admin",
 			name: "integration1cAdmin",
-			component: () => import("@/views/integration1c/Integration1CAdmin.vue"),
+			component: () =>
+				import("@/views/integration1c/Integration1CAdmin.vue"),
 			meta: { roleId: "admin" },
 		},
 		{
@@ -228,7 +229,24 @@ const manualRouteManifest: RouteManifestEntry[] = [
 
 export const routeManifest: RouteManifestEntry[] = [
 	...manualRouteManifest,
-	...generatedRouteManifest,
+	...generatedRouteManifest.map((entry) =>
+		entry.route.name === "customerMessages"
+			? {
+					...entry,
+					route: {
+						...entry.route,
+						meta: {
+							...entry.route.meta,
+							roleId: "admin",
+						},
+					},
+					registry: {
+						...entry.registry,
+						menu_available: true,
+					},
+				}
+			: entry,
+	),
 ];
 
 export const applicationRouteManifest: ApplicationRouteManifestItem[] =
