@@ -8,7 +8,10 @@ export interface OrderListDTO {
 	shipment_ref_1c: Record<string, unknown> | null;
 	customer_id: number;
 	customer: Record<string, unknown>;
-	customer_sale_place: Record<string, unknown>;
+	customer_sale_place: Record<string, unknown> | null;
+	cash_payed: boolean;
+	customer_name: string | null;
+	customer_phone: string | null;
 	customer_user: Record<string, unknown> | null;
 	status: Record<string, unknown> | null;
 	comment_customer: string | null;
@@ -23,7 +26,10 @@ export interface OrderList {
 	shipment_ref_1c: Record<string, unknown> | null;
 	customer_id: number;
 	customer: Record<string, unknown>;
-	customer_sale_place: Record<string, unknown>;
+	customer_sale_place: Record<string, unknown> | null;
+	cash_payed: boolean;
+	customer_name: string | null;
+	customer_phone: string | null;
 	customer_user: Record<string, unknown> | null;
 	status: Record<string, unknown> | null;
 	comment_customer: string | null;

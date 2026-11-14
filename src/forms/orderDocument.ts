@@ -43,6 +43,9 @@ export const createOrderDocumentFormModel = (): OrderFormModel => ({
 	shipment_ref_1c: null,
 	customer_id: 0,
 	customer: null,
+	cash_payed: false,
+	customer_name: null,
+	customer_phone: null,
 	customer_sale_place_id: 0,
 	customer_sale_place: null,
 	customer_user_id: null,
@@ -65,6 +68,9 @@ export const orderDocumentToFormModel = (
 	shipment_ref_1c: detail.shipment_ref_1c,
 	customer_id: detail.customer_id,
 	customer: detail.customer,
+	cash_payed: detail.cash_payed,
+	customer_name: detail.customer_name,
+	customer_phone: detail.customer_phone,
 	customer_sale_place_id: detail.customer_sale_place_id,
 	customer_sale_place: detail.customer_sale_place,
 	customer_user_id: detail.customer_user_id,
@@ -89,17 +95,18 @@ export const orderDocumentToFormModel = (
 
 export const copyOrderDocumentFormModel = (
 	detail: OrderDetail,
-): OrderFormModel => ({
-	...orderDocumentToFormModel(detail),
-	id: 0,
-	version: 0,
-	number_1c: null,
-	ref_1c: null,
-	shipment_ref_1c: null,
-	status_id: 1,
-	status: null,
-	items: copiedItems(detail.items),
-} as OrderFormModel);
+): OrderFormModel =>
+	({
+		...orderDocumentToFormModel(detail),
+		id: 0,
+		version: 0,
+		number_1c: null,
+		ref_1c: null,
+		shipment_ref_1c: null,
+		status_id: 1,
+		status: null,
+		items: copiedItems(detail.items),
+	}) as OrderFormModel;
 
 export const orderFormModelToDocument = (
 	form: OrderFormModel,
@@ -128,7 +135,8 @@ export const orderFormModelToDocument = (
 				measure_unit_id: item.measure_unit_id,
 				quant_required: item.quant_required,
 				quant: item.quant,
-				...(id === 0 || mercury !== loadedMercuryByID.get(id)
+				...(id === 0 ||
+				mercury !== loadedMercuryByID.get(id)
 					? { mercury }
 					: {}),
 				weight_confirmed: item.weight_confirmed,
@@ -143,7 +151,12 @@ export const orderFormModelToDocument = (
 		ref_1c: normalizeRef1C(form.ref_1c),
 		shipment_ref_1c: normalizeRef1C(form.shipment_ref_1c),
 		customer_id: form.customer_id ?? 0,
-		customer_sale_place_id: form.customer_sale_place_id ?? 0,
+		cash_payed: form.cash_payed,
+		customer_name: optionalText(form.customer_name),
+		customer_phone: optionalText(form.customer_phone),
+		customer_sale_place_id: form.cash_payed
+			? null
+			: optionalID(form.customer_sale_place_id),
 		customer_user_id: optionalID(form.customer_user_id),
 		status_id: optionalID(form.status_id),
 		comment_customer: optionalText(form.comment_customer),

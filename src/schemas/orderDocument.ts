@@ -7,10 +7,7 @@ import {
 	defaultTranslate,
 	type TranslateFn,
 } from "@/schemas/common";
-import type {
-	OrderDetail,
-	OrderDocument,
-} from "@/types/orderDocument";
+import type { OrderDetail, OrderDocument } from "@/types/orderDocument";
 
 export const createOrderDocumentSchemas = (t: TranslateFn) => {
 	const {
@@ -27,7 +24,10 @@ export const createOrderDocumentSchemas = (t: TranslateFn) => {
 	);
 	const PositiveNumberSchema = v.pipe(
 		NumberSchema,
-		v.minValue(Number.MIN_VALUE, t("validation.minVal", { minVal: 0 })),
+		v.minValue(
+			Number.MIN_VALUE,
+			t("validation.minVal", { minVal: 0 }),
+		),
 	);
 	const IDReferenceSchema = v.object({
 		keys: v.object({
@@ -71,7 +71,10 @@ export const createOrderDocumentSchemas = (t: TranslateFn) => {
 		shipment_ref_1c: v.nullable(Ref1CSchema),
 		customer_id: IdSchema,
 		customer: v.nullable(IDReferenceSchema),
-		customer_sale_place_id: IdSchema,
+		cash_payed: v.optional(v.boolean(), false),
+		customer_name: v.nullish(TextSchema, null),
+		customer_phone: v.nullish(TextSchema, null),
+		customer_sale_place_id: v.nullable(IdSchema),
 		customer_sale_place: v.nullable(IDReferenceSchema),
 		customer_user_id: v.nullable(IdSchema),
 		customer_user: v.nullable(IDReferenceSchema),
@@ -81,24 +84,43 @@ export const createOrderDocumentSchemas = (t: TranslateFn) => {
 		comment_admin: v.nullable(TextSchema),
 		items: v.array(OrderDetailItemDTOSchema),
 	});
-	const OrderDocumentSchema = v.object({
-		id: NonNegativeIntSchema,
-		version: NonNegativeIntSchema,
-		for_date: v.date(),
-		number_1c: v.nullable(TextSchema),
-		ref_1c: v.nullable(Ref1CSchema),
-		shipment_ref_1c: v.nullable(Ref1CSchema),
-		customer_id: IdSchema,
-		customer_sale_place_id: IdSchema,
-		customer_user_id: v.nullable(IdSchema),
-		status_id: v.nullable(IdSchema),
-		comment_customer: v.nullable(TextSchema),
-		comment_admin: v.nullable(TextSchema),
-		items: v.pipe(
-			v.array(OrderDocumentItemSchema),
-			v.minLength(1, t("Order.items.errors.required")),
+	const OrderDocumentSchema = v.pipe(
+		v.object({
+			id: NonNegativeIntSchema,
+			version: NonNegativeIntSchema,
+			for_date: v.date(),
+			number_1c: v.nullable(TextSchema),
+			ref_1c: v.nullable(Ref1CSchema),
+			shipment_ref_1c: v.nullable(Ref1CSchema),
+			customer_id: IdSchema,
+			cash_payed: v.boolean(),
+			customer_name: v.nullable(TextSchema),
+			customer_phone: v.nullable(TextSchema),
+			customer_sale_place_id: v.nullable(IdSchema),
+			customer_user_id: v.nullable(IdSchema),
+			status_id: v.nullable(IdSchema),
+			comment_customer: v.nullable(TextSchema),
+			comment_admin: v.nullable(TextSchema),
+			items: v.pipe(
+				v.array(OrderDocumentItemSchema),
+				v.minLength(
+					1,
+					t("Order.items.errors.required"),
+				),
+			),
+		}),
+		v.forward(
+			v.partialCheck(
+				[["cash_payed"], ["customer_sale_place_id"]],
+				(document) =>
+					document.cash_payed ||
+					document.customer_sale_place_id !==
+						null,
+				t("validation.required"),
+			),
+			["customer_sale_place_id"],
 		),
-	});
+	);
 
 	return {
 		OrderDetailDTOSchema,

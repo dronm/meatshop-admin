@@ -69,6 +69,31 @@ const columns: GridColumn<OrderList>[] = [
 		bodyClass: orderStatusClass,
 	},
 	{
+		field: "cash_payed",
+		headerKey: "Order.fields.cash_payed",
+		sortable: true,
+		dataType: "boolean",
+		align: "center",
+		format: (value: unknown): string =>
+			value === true ? "да" : "нет",
+		width: "8rem",
+		bodyClass: orderStatusClass,
+	},
+	{
+		field: "customer_name",
+		headerKey: "Order.fields.customer_name",
+		sortable: true,
+		width: "12rem",
+		bodyClass: orderStatusClass,
+	},
+	{
+		field: "customer_phone",
+		headerKey: "Order.fields.customer_phone",
+		sortable: true,
+		width: "11rem",
+		bodyClass: orderStatusClass,
+	},
+	{
 		field: "customer_sale_place",
 		headerKey: "Order.fields.customer_sale_place",
 		sortable: true,

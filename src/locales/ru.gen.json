@@ -17,6 +17,21 @@
 			"copy": "Копия покупателя"
 		}
 	},
+	"CustomerMessage": {
+		"title": "Сообщения покупателей",
+		"fields": {
+			"created_at": "Получено",
+			"customer": "Покупатель",
+			"is_read": "Прочитано",
+			"sender_name": "Отправитель",
+			"text": "Сообщение"
+		},
+		"form": {
+			"create": "Сообщения покупателей",
+			"edit": "Сообщения покупателей",
+			"copy": "Сообщения покупателей"
+		}
+	},
 	"MaxInMessage": {
 		"title": "Входящие сообщения MAX",
 		"fields": {
@@ -83,10 +98,13 @@
 	"Order": {
 		"title": "Заказы",
 		"fields": {
+			"cash_payed": "Наличный расчет",
 			"comment_admin": "Комментарий наш",
 			"comment_customer": "Комментарий заказчика",
 			"customer": "Заказчик",
 			"customer_id": "Заказчик",
+			"customer_name": "Имя покупателя",
+			"customer_phone": "Телефон покупателя",
 			"customer_sale_place": "Точка",
 			"customer_sale_place_id": "Точка продаж",
 			"customer_user": "Пользователь",
@@ -124,21 +142,6 @@
 			"create": "Новая продукция",
 			"edit": "Продукция",
 			"copy": "Копия продукции"
-		}
-	},
-	"CustomerMessage": {
-		"title": "Сообщения покупателей",
-		"fields": {
-			"created_at": "Получено",
-			"customer": "Покупатель",
-			"is_read": "Прочитано",
-			"sender_name": "Отправитель",
-			"text": "Сообщение"
-		},
-		"form": {
-			"create": "Сообщения покупателей",
-			"edit": "Сообщения покупателей",
-			"copy": "Сообщения покупателей"
 		}
 	}
 }

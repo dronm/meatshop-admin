@@ -65,6 +65,28 @@ const baseColumns: GridColumn<OrderLineListRow>[] = [
 		width: "12rem",
 	},
 	{
+		field: "cash_payed",
+		headerKey: "OrderLineList.fields.cash_payed",
+		sortable: true,
+		dataType: "boolean",
+		align: "center",
+		format: (value: unknown): string =>
+			value === true ? "да" : "нет",
+		width: "8rem",
+	},
+	{
+		field: "customer_name",
+		headerKey: "OrderLineList.fields.customer_name",
+		sortable: true,
+		width: "12rem",
+	},
+	{
+		field: "customer_phone",
+		headerKey: "OrderLineList.fields.customer_phone",
+		sortable: true,
+		width: "11rem",
+	},
+	{
 		field: "customer_sale_place",
 		headerKey: "OrderLineList.fields.customer_sale_place",
 		searchDataType: "reference",
@@ -129,7 +151,8 @@ const baseColumns: GridColumn<OrderLineListRow>[] = [
 		sortable: true,
 		dataType: "boolean",
 		align: "center",
-		format: (value: unknown): string => value === true ? "да" : "нет",
+		format: (value: unknown): string =>
+			value === true ? "да" : "нет",
 		width: "4.5rem",
 	},
 	{

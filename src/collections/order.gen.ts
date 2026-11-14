@@ -26,6 +26,7 @@ const commands: GridCommand<ListModel, OrderKey>[] = [
 	{ name: "delete" },
 	{ name: "search" },
 	{ name: "refresh" },
+	{ name: "resetColumnWidths" },
 ];
 
 export const orderCollection = defineCollection<
@@ -37,6 +38,9 @@ export const orderCollection = defineCollection<
 >({
 	titleKey: "Order.title",
 	api: orderApi,
+	stickyHeader: true,
+	resizableColumns: true,
+	columnResizeMode: "expand",
 	columns: [
 		{
 			field: "id",
@@ -69,6 +73,25 @@ export const orderCollection = defineCollection<
 		{
 			field: "customer_sale_place",
 			headerKey: "Order.fields.customer_sale_place",
+			sortable: true,
+			width: "12rem",
+		},
+		{
+			field: "cash_payed",
+			headerKey: "Order.fields.cash_payed",
+			sortable: true,
+			dataType: "boolean",
+			width: "9rem",
+		},
+		{
+			field: "customer_name",
+			headerKey: "Order.fields.customer_name",
+			sortable: true,
+			width: "12rem",
+		},
+		{
+			field: "customer_phone",
+			headerKey: "Order.fields.customer_phone",
 			sortable: true,
 			width: "12rem",
 		},

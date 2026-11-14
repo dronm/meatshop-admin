@@ -10,6 +10,9 @@ export interface OrderLineList {
 	status: IDReference | null;
 	shipment_ref_1c: Ref1C | null;
 	customer: IDReference | null;
+	cash_payed: boolean;
+	customer_name: string | null;
+	customer_phone: string | null;
 	customer_sale_place: IDReference | null;
 	product: IDReference | null;
 	quant: number;

@@ -166,7 +166,10 @@
 		"fields": {
 			"comment_customer": "Комментарий клиента",
 			"comment_admin": "Комментарий",
-			"number_1c": "Номер 1С"
+			"number_1c": "Номер 1С",
+			"cash_payed": "Наличный расчет",
+			"customer_name": "Имя покупателя",
+			"customer_phone": "Телефон покупателя"
 		}
 	},
 	"OrderLineList": {
@@ -187,6 +190,9 @@
 			"for_date": "Дата",
 			"status": "Статус",
 			"customer": "Заказчик",
+			"cash_payed": "Наличный расчет",
+			"customer_name": "Имя покупателя",
+			"customer_phone": "Телефон покупателя",
 			"customer_sale_place": "Точка продаж",
 			"product": "Продукция",
 			"quant": "Кол-во",

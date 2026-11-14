@@ -42,7 +42,10 @@ export interface OrderDocument {
 	ref_1c: Ref1C | null;
 	shipment_ref_1c: Ref1C | null;
 	customer_id: number;
-	customer_sale_place_id: number;
+	cash_payed: boolean;
+	customer_name: string | null;
+	customer_phone: string | null;
+	customer_sale_place_id: number | null;
 	customer_user_id: number | null;
 	status_id: number | null;
 	comment_customer: string | null;
@@ -71,6 +74,9 @@ export interface OrderFormModel {
 	shipment_ref_1c: Ref1C | null;
 	customer_id: number | null;
 	customer: IDReference | null;
+	cash_payed: boolean;
+	customer_name: string | null;
+	customer_phone: string | null;
 	customer_sale_place_id: number | null;
 	customer_sale_place: IDReference | null;
 	customer_user_id: number | null;

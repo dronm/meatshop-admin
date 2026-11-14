@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { computed, nextTick, ref } from "vue";
+import { computed, nextTick, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
 import DatePicker from "primevue/datepicker";
+import Checkbox from "primevue/checkbox";
 import InputText from "primevue/inputtext";
 import Textarea from "primevue/textarea";
 
@@ -89,8 +90,19 @@ const updateCustomerSalePlaceID = (value: number | null): void => {
 	form.value.customer_sale_place = null;
 };
 
+watch(
+	() => form.value.cash_payed,
+	(cashPayed) => {
+		if (cashPayed) {
+			form.value.customer_sale_place_id = null;
+			form.value.customer_sale_place = null;
+		}
+	},
+	{ immediate: true },
+);
+
 const submit = async (): Promise<void> => {
-	if (await itemsGridRef.value?.commitPendingEdit() === false) {
+	if ((await itemsGridRef.value?.commitPendingEdit()) === false) {
 		return;
 	}
 	await nextTick();
@@ -115,6 +127,21 @@ const submit = async (): Promise<void> => {
 			class="form-two-column-grid grid grid-cols-1 gap-4 md:grid-cols-2"
 		>
 			<div class="space-y-4">
+				<FormField
+					field="cash_payed"
+					forId="orderCashPayed"
+					:label="t('Order.fields.cash_payed')"
+					:errors="props.errors"
+					v-slot="{ invalid }"
+				>
+					<Checkbox
+						v-model="form.cash_payed"
+						inputId="orderCashPayed"
+						binary
+						:invalid="invalid"
+					/>
+				</FormField>
+
 				<FormField
 					field="for_date"
 					forId="orderForDate"
@@ -183,6 +210,7 @@ const submit = async (): Promise<void> => {
 				</FormField>
 
 				<FormField
+					v-if="!form.cash_payed"
 					field="customer_sale_place_id"
 					forId="orderCustomerSalePlaceID"
 					:label="
@@ -211,6 +239,51 @@ const submit = async (): Promise<void> => {
 						"
 					/>
 				</FormField>
+
+				<template v-if="form.cash_payed">
+					<FormField
+						field="customer_name"
+						forId="orderCustomerName"
+						:label="
+							t(
+								'Order.fields.customer_name',
+							)
+						"
+						:errors="props.errors"
+						v-slot="{ invalid }"
+					>
+						<InputText
+							id="orderCustomerName"
+							v-model="
+								form.customer_name
+							"
+							autocomplete="name"
+							:invalid="invalid"
+						/>
+					</FormField>
+
+					<FormField
+						field="customer_phone"
+						forId="orderCustomerPhone"
+						:label="
+							t(
+								'Order.fields.customer_phone',
+							)
+						"
+						:errors="props.errors"
+						v-slot="{ invalid }"
+					>
+						<InputText
+							id="orderCustomerPhone"
+							v-model="
+								form.customer_phone
+							"
+							type="tel"
+							autocomplete="tel"
+							:invalid="invalid"
+						/>
+					</FormField>
+				</template>
 
 				<FormField
 					field="customer_user_id"
