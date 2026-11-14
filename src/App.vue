@@ -12,6 +12,7 @@ import wsManager from "@/api/wsConn";
 import { useAuthStore } from "@/stores/useAuthStore";
 import Login from "@/views/Login.vue";
 import CustomerMessageNotifications from "@/components/customerMessage/CustomerMessageNotifications.vue";
+import Order1CFeedbackDialog from "@/components/integration1c/Order1CFeedbackDialog.vue";
 
 const {
 	menu,
@@ -131,6 +132,7 @@ watch(
 		/>
 
 		<ProgAboutDialog v-model:visible="progAboutVisible" />
+		<Order1CFeedbackDialog />
 
 		<main
 			class="relative"

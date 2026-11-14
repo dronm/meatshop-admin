@@ -1,6 +1,7 @@
 import { type GridCommand } from "@katren/vue-collection-lib";
 
 import { i18n } from "@/i18n";
+import { showOrder1CFeedback } from "@/composables/useOrder1CFeedback";
 import type { OrderKey } from "@/types/orderDocument";
 import { createOrdersIn1C, createOrderShipments } from "@/utils/order1cActions";
 import { nextOrderStatusID } from "@/utils/orderStatus";
@@ -35,8 +36,10 @@ const commandOrderIDs = (rows: readonly OrderCommandRow[]): number[] | null => {
 		.map((row) => row.id);
 
 	if (missingReferenceIDs.length > 0) {
-		window.alert(
-			String(
+		showOrder1CFeedback({
+			title: String(i18n.global.t("Order.feedback.errorTitle")),
+			severity: "error",
+			message: String(
 				i18n.global.t(
 					"Order.feedback.missing1cReferences",
 					{
@@ -46,7 +49,7 @@ const commandOrderIDs = (rows: readonly OrderCommandRow[]): number[] | null => {
 					},
 				),
 			),
-		);
+		});
 		return null;
 	}
 
